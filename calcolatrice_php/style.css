@@ -7,27 +7,19 @@ body
     font-size: 50px;
 }
 
-#button
-{
-    font-size: 40px;
-    margin: 10px;
-    width: 70px;
-}
-
-#field
-{
-    font-size: 25px;
-    margin: 10px;
-}
-
 input[type=text], [type=submit]
 {
     border: 2px solid black;
     border-radius: 4px;
+    font-size: 25px;
+    margin: 10px;
 }
 
 input[type=submit]
 {
     background-color: orangered;
     color: white;
+    font-size: 40px;
+    margin: 10px;
+    width: 70px;
 }
