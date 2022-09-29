@@ -1,0 +1,28 @@
+body
+{
+    background-color: darksalmon; 
+    color: white;
+    text-align: center;
+    font-size: 50px;
+}
+
+input[type=text], [type=submit]
+{
+    border: 2px solid black;
+    border-radius: 4px;
+    font-size: 25px;
+}
+
+input[type=submit]
+{
+    background-color: orangered;
+    color: white;
+    font-size: 30px;
+    margin: 10px;
+    width: 200px;
+}
+
+table
+{
+    font-size: 36px;
+}
