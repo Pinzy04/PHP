@@ -41,24 +41,24 @@
 
 <HTML>
     <HEAD>
-      <meta charset = "UTF-8">
-      <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
-      <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <meta charset = "UTF-8">
+        <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
       
-      <link rel = "stylesheet" href = "style.css">
-</HEAD>
+        <link rel = "stylesheet" href = "style.css">
+    </HEAD>
     <BODY>
         <H1>Calcolatrice php</H1>
-        <FORM name='F1' method='post' action='calcolatrice_php.php' style="font-size: 50px">
-            <INPUT type='text' id = 'field' name='T1' size='5' value='<?php echo $t1; ?>' />
-            <INPUT type='text' id = 'field' name='T2' size='5' value='<?php echo $t2; ?>'/>
+        <FORM name='F1' method='post' action='calcolatrice_php.php'>
+            <INPUT type='text' name='T1' size='5' value='<?php echo $t1; ?>' />
+            <INPUT type='text' name='T2' size='5' value='<?php echo $t2; ?>'/>
             <BR><BR>
-            <INPUT type='submit' id = 'button' name='B1' value='+' />
-            <INPUT type='submit' id = 'button' name='B2' value='-' />
-            <INPUT type='submit' id = 'button' name='B3' value='*' />
-            <INPUT type='submit' id = 'button' name='B4' value='/' />
+            <INPUT type='submit' name='B1' value='+' />
+            <INPUT type='submit' name='B2' value='-' />
+            <INPUT type='submit' name='B3' value='*' />
+            <INPUT type='submit' name='B4' value='/' />
             <BR><BR>
-            <INPUT type='text' id = 'field' name='T3' size='5' value='<?php echo $t3; ?>' />
+            <INPUT type='text' name='T3' size='5' value='<?php echo $t3; ?>' />
         </FORM>
     </BODY>
 </HTML>
