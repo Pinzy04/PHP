@@ -88,9 +88,9 @@
                     $g1=rand(0, 2);
                     $g2=rand(0, 2);
                     echo "<tr>";
-                        echo "<td width='50px' align='center'>".$s[$g1]."</td>";
-                        echo "<td width='50px' align='center'>".$s[$g2]."</td>";
-                        echo "<td width='50px' align='center'>".esito($g1, $g2)."</td>";
+                        echo "<td width='250px' align='center'>".$s[$g1]."</td>";
+                        echo "<td width='250px' align='center'>".$s[$g2]."</td>";
+                        echo "<td width='250px' align='center'>".esito($g1, $g2)."</td>";
                     echo "</tr>";
                 }
             ?>
