@@ -4,22 +4,28 @@
     // righe e colonne della matrice
     $r = 9;
     $c = 9;
-    $v = 4;
-    $o = 4;
+    
+    
+
 
     if(isset($_POST['R']))
     {
-        $_SESSION['valori']=null;
+        $_SESSION['valori'] = null;
     }
 
     if(!isset($_SESSION['valori']))
     {
+        $_SESSION['x'] = 4;
+        $_SESSION['y'] = 4;
+        $_SESSION['contMosse'] = 0;
+        $_SESSION['ultima'] = '';
+
         $_SESSION['valori'] = Array();
         for($i=0; $i<$r; $i++)
         {
             for($j=0; $j<$c; $j++)
             {   
-                if($i == 4 && $j == 4)
+                if($i == $_SESSION['x'] && $j == $_SESSION['y'])
                 {
                     $_SESSION['valori'][$i][$j] = 1;
                 }
@@ -31,50 +37,74 @@
         }
     }
 
-    if(isset($_POST['N']))
+    if(isset($_POST['N']) && $_SESSION['x'] > 0)
     {
         for($i=0; $i<$r; $i++)
         {
             for($j=0; $j<$c; $j++)
             {
-                $v++;
-                $_SESSION['valori'][$o][$v] = 1;
+                if($_SESSION['valori'][$i][$j] == 1)
+                {
+                    $_SESSION['valori'][$i][$j] = 0;
+                    $_SESSION['x'] = $_SESSION['x'] - 1;
+                    $_SESSION['valori'][$_SESSION['x']][$_SESSION['y']] = 1;
+                    $_SESSION['contMosse']++;
+                    $_SESSION['ultima'] = 'N';
+                }
             } 
         }
     }
 
-    if(isset($_POST['O']))
+    if(isset($_POST['O']) && $_SESSION['y'] > 0)
     {
         for($i=0; $i<$r; $i++)
         {
             for($j=0; $j<$c; $j++)
             {
-                $o--;
-                $_SESSION['valori'][$o][$v] = 1;
+                if($_SESSION['valori'][$i][$j] == 1)
+                {
+                    $_SESSION['valori'][$i][$j] = 0;
+                    $_SESSION['y'] = $_SESSION['y'] - 1;
+                    $_SESSION['valori'][$_SESSION['x']][$_SESSION['y']] = 1;
+                    $_SESSION['contMosse']++;
+                    $_SESSION['ultima'] = 'O';
+                }
             } 
         }
     }
 
-    if(isset($_POST['E']))
+    if(isset($_POST['E']) && $_SESSION['y'] < 8)
     {
         for($i=0; $i<$r; $i++)
         {
             for($j=0; $j<$c; $j++)
             {
-                $o++;
-                $_SESSION['valori'][$o][$v] = 1;
+                if($_SESSION['valori'][$i][$j] == 1)
+                {
+                    $_SESSION['valori'][$i][$j] = 0;
+                    $_SESSION['y'] = $_SESSION['y'] + 1;
+                    $_SESSION['valori'][$_SESSION['x']][$_SESSION['y']] = 1;
+                    $_SESSION['contMosse']++;
+                    $_SESSION['ultima'] = 'E';
+                }
             } 
         }
     }
 
-    if(isset($_POST['S']))
+    if(isset($_POST['S']) && $_SESSION['y'] < 8)
     {
         for($i=0; $i<$r; $i++)
         {
             for($j=0; $j<$c; $j++)
             {
-                $v--;
-                $_SESSION['valori'][$o][$v] = 1;
+                if($_SESSION['valori'][$i][$j] == 1)
+                {
+                    $_SESSION['valori'][$i][$j] = 0;
+                    $_SESSION['x'] = $_SESSION['x'] + 1;
+                    $_SESSION['valori'][$_SESSION['x']][$_SESSION['y']] = 1;
+                    $_SESSION['contMosse']++;
+                    $_SESSION['ultima'] = 'S';
+                }
             } 
         }
     }
@@ -94,7 +124,7 @@
                     echo "<tr>"; 
                     for($j=0; $j<$c; $j++)
                     {
-                        if($i == $o && $j == $v)
+                        if($_SESSION['valori'][$i][$j] == 1)
                         {
                             echo "<td style='background: red'> &nbsp;&nbsp;&nbsp;&nbsp; </td>";
                         }
@@ -108,8 +138,13 @@
                 }		  
                 echo "</table>";
                 // fine tabella HTML
+
+                echo "<p>Numero mosse eseguite: </p>".$_SESSION['contMosse'];
+                echo "<p>Ultima mossa eseguite: </p>".$_SESSION['ultima'];
             ?>
             
+            <br>
+
             <table border='1' align='center'>
                 <tr>
                     <td style='background: white'> &nbsp;&nbsp;&nbsp;&nbsp; </td>
