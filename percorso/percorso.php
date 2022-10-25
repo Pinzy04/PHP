@@ -1,7 +1,6 @@
 <HTML>
    <HEAD>
-      <TITLE>Trova Maggiore</TITLE>
-      <LINK rel="stylesheet" href="trovamaggiore.css" type="TEXT/CSS">
+      <TITLE> Percorso </TITLE>
    </HEAD>
 
    <BODY>
