@@ -15,7 +15,7 @@
    if(!isset($_SESSION['mosse']))
       $_SESSION['mosse'] = 0;
 
-function tabe($ri,$co,$to,$ul)
+function disegnaTable($ri,$co,$to,$ul)
 {
    echo "<table border='1'>";
    for($i = 0; $i < 9; $i++)
@@ -78,7 +78,7 @@ if(isset($_POST['O']))
    }
 }
 
-tabe($r, $c, $t, $u);
+disegnaTable($r, $c, $t, $u);
 
 $_SESSION['y'] = $r;
 $_SESSION['x'] = $c;
