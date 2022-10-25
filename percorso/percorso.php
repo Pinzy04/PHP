@@ -105,4 +105,4 @@ $_SESSION['mosse'] = $t;
             <td>&nbsp;</td>
         </tr>
     </table>
-</fomr>
+</form>
