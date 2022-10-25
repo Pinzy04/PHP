@@ -87,7 +87,7 @@ $_SESSION['mosse'] = $t;
 ?>
 
 <br><br>
-<form name='F1' method='post' action=''>
+<form name='F1' method='post' action='<?php echo $_SERVER['PHP_SELF']?>'>
    <table border='1'>
         <tr>
             <td>&nbsp;</td>
