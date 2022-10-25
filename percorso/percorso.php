@@ -1,169 +1,108 @@
 <?php
-    session_start();
+   session_start();
+   
+   if(isset($_POST['R']))
+   {
+	   $_SESSION['y'] = null;
+	   $_SESSION['x'] = null;
+	   $_SESSION['mosse'] = null;
+   }
 
-    // righe e colonne della matrice
-    $r = 9;
-    $c = 9;
-    
-    
+   if(!isset($_SESSION['y']))
+      $_SESSION['y'] = 4;
+   if(!isset($_SESSION['x']))
+      $_SESSION['x'] = 4;
+   if(!isset($_SESSION['mosse']))
+      $_SESSION['mosse'] = 0;
+
+function tabe($ri,$co,$to,$ul)
+{
+   echo "<table border='1'>";
+   for($i = 0; $i < 9; $i++)
+   {
+      echo "<TR>";
+      for($j=0;$j<9;$j++)
+      {
+         if(($ri == $i) && ($co == $j))
+            echo "<td bgcolor='red'>&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+         else
+            echo "<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+      }
+      echo "</tr>";
+   }
+   echo "</table>";
+   echo "<BR>Ultima mossa:<B>".$ul."</B>";
+   echo "<BR>Totale mosse:<B>".$to."</B>";
+}
 
 
-    if(isset($_POST['R']))
-    {
-        $_SESSION['valori'] = null;
-    }
+$r = $_SESSION['y'];
+$c = $_SESSION['x'];
+$t = $_SESSION['mosse'];
+$u = "NULLA";
 
-    if(!isset($_SESSION['valori']))
-    {
-        $_SESSION['x'] = 4;
-        $_SESSION['y'] = 4;
-        $_SESSION['contMosse'] = 0;
-        $_SESSION['ultima'] = '';
+if(isset($_POST['N']))
+{
+   if($r > 0)
+   {
+      $r--;
+      $t++;
+      $u = "NORD";
+   }
+}
+if(isset($_POST['E']))
+{
+   if($c < 8)
+   {
+      $c++;
+      $t++;
+      $u = "EST";
+   }
+}
+if(isset($_POST['S']))
+{
+   if($r < 8)
+   {
+      $r++;
+      $t++;
+      $u = "SUD";
+   }
+}
+if(isset($_POST['O']))
+{
+   if($c > 0)
+   {
+      $c--;
+      $t++;
+      $u = "OVEST";
+   }
+}
 
-        $_SESSION['valori'] = Array();
-        for($i=0; $i<$r; $i++)
-        {
-            for($j=0; $j<$c; $j++)
-            {   
-                if($i == $_SESSION['x'] && $j == $_SESSION['y'])
-                {
-                    $_SESSION['valori'][$i][$j] = 1;
-                }
-                else
-                {
-                    $_SESSION['valori'][$i][$j] = 0;
-                }
-            }
-        }
-    }
+tabe($r, $c, $t, $u);
 
-    if(isset($_POST['N']) && $_SESSION['x'] > 0)
-    {
-        for($i=0; $i<$r; $i++)
-        {
-            for($j=0; $j<$c; $j++)
-            {
-                if($_SESSION['valori'][$i][$j] == 1)
-                {
-                    $_SESSION['valori'][$i][$j] = 0;
-                    $_SESSION['x'] = $_SESSION['x'] - 1;
-                    $_SESSION['valori'][$_SESSION['x']][$_SESSION['y']] = 1;
-                    $_SESSION['contMosse']++;
-                    $_SESSION['ultima'] = 'N';
-                }
-            } 
-        }
-    }
+$_SESSION['y'] = $r;
+$_SESSION['x'] = $c;
+$_SESSION['mosse'] = $t;
 
-    if(isset($_POST['O']) && $_SESSION['y'] > 0)
-    {
-        for($i=0; $i<$r; $i++)
-        {
-            for($j=0; $j<$c; $j++)
-            {
-                if($_SESSION['valori'][$i][$j] == 1)
-                {
-                    $_SESSION['valori'][$i][$j] = 0;
-                    $_SESSION['y'] = $_SESSION['y'] - 1;
-                    $_SESSION['valori'][$_SESSION['x']][$_SESSION['y']] = 1;
-                    $_SESSION['contMosse']++;
-                    $_SESSION['ultima'] = 'O';
-                }
-            } 
-        }
-    }
-
-    if(isset($_POST['E']) && $_SESSION['y'] < 8)
-    {
-        for($i=0; $i<$r; $i++)
-        {
-            for($j=0; $j<$c; $j++)
-            {
-                if($_SESSION['valori'][$i][$j] == 1)
-                {
-                    $_SESSION['valori'][$i][$j] = 0;
-                    $_SESSION['y'] = $_SESSION['y'] + 1;
-                    $_SESSION['valori'][$_SESSION['x']][$_SESSION['y']] = 1;
-                    $_SESSION['contMosse']++;
-                    $_SESSION['ultima'] = 'E';
-                }
-            } 
-        }
-    }
-
-    if(isset($_POST['S']) && $_SESSION['y'] < 8)
-    {
-        for($i=0; $i<$r; $i++)
-        {
-            for($j=0; $j<$c; $j++)
-            {
-                if($_SESSION['valori'][$i][$j] == 1)
-                {
-                    $_SESSION['valori'][$i][$j] = 0;
-                    $_SESSION['x'] = $_SESSION['x'] + 1;
-                    $_SESSION['valori'][$_SESSION['x']][$_SESSION['y']] = 1;
-                    $_SESSION['contMosse']++;
-                    $_SESSION['ultima'] = 'S';
-                }
-            } 
-        }
-    }
 ?>
 
-<html>
-   <body align='center' style="text-align: center; background: #6495ED">
-
-        <!-- viene creato il FORM per gestire la matrice di text -->
-        <form name='F1' method='POST' action='<?php echo $_SERVER['PHP_SELF']?>'>
-
-            <?php
-                // tabella HTML contenente la matrice di submit
-                echo "<table border='1' align='center'>";
-                for($i=0; $i<$r; $i++)
-                {
-                    echo "<tr>"; 
-                    for($j=0; $j<$c; $j++)
-                    {
-                        if($_SESSION['valori'][$i][$j] == 1)
-                        {
-                            echo "<td style='background: red'> &nbsp;&nbsp;&nbsp;&nbsp; </td>";
-                        }
-                        else
-                        {
-                            echo "<td style='background: white'> &nbsp;&nbsp;&nbsp;&nbsp; </td>"; 
-                        }
-                        
-                    }		  
-                    echo "</tr>"; 
-                }		  
-                echo "</table>";
-                // fine tabella HTML
-
-                echo "<p>Numero mosse eseguite: </p>".$_SESSION['contMosse'];
-                echo "<p>Ultima mossa eseguite: </p>".$_SESSION['ultima'];
-            ?>
-            
-            <br>
-
-            <table border='1' align='center'>
-                <tr>
-                    <td style='background: white'> &nbsp;&nbsp;&nbsp;&nbsp; </td>
-                    <td><input type='submit' name='N' value='N' /></td>
-                    <td style='background: white'> &nbsp;&nbsp;&nbsp;&nbsp; </td>
-                </tr>
-                <tr>
-                    <td><input type='submit' name='O' value='O' /></td>
-                    <td><input type='submit' name='R' value='R' /></td>
-                    <td><input type='submit' name='E' value='E' /></td>
-                </tr>
-                    <td style='background: white'> &nbsp;&nbsp;&nbsp;&nbsp; </td>
-                    <td><input type='submit' name='S' value='S' /></td>
-                    <td style='background: white'> &nbsp;&nbsp;&nbsp;&nbsp; </td>
-                </tr>
-            </table>
-        </form>
-
-        <br><br>
-
-    </body>
-</html>
+<br><br>
+<form name='F1' method='post' action=''>
+   <table border='1'>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type='submit' name='N' value='N'></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td><input type='submit' name='O' value='O'></td>
+            <td><input type='submit' name='R' value='R'></td>
+            <td><input type='submit' name='E' value='E'></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type='submit' name='S' value='S'></td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+</fomr>
