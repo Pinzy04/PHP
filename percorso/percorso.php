@@ -1,9 +1,9 @@
-<HTML>
-   <HEAD>
-      <TITLE> Percorso </TITLE>
-   </HEAD>
+<html>
+   <head>
+      <title> Percorso </title>
+   </head>
 
-   <BODY>
+   <body align='center' style='background-color: gainsboro'>
       <?php
          session_start();
          
@@ -23,7 +23,7 @@
 
          function disegnaTable($ri,$co,$to,$ul)
          {
-            echo "<table border='1'>";
+            echo "<table border='1' align='center'>";
             for($i = 0; $i < 9; $i++)
             {
                echo "<TR>";
@@ -92,7 +92,7 @@
       ?>
       <br><br>
       <form name='F1' method='post' action='<?php echo $_SERVER['PHP_SELF']?>'>
-         <table border='1'>
+         <table border='1' align='center'>
             <tr>
                   <td>&nbsp;</td>
                   <td><input type='submit' name='N' value='N'></td>
@@ -110,6 +110,5 @@
             </tr>
          </table>
       </form>
-   </BODY>
-
-</HTML>
+   </body>
+</html>
