@@ -1,7 +1,7 @@
 <html>
    <head>
       <title> Percorso </title>
-</head>
+   </head>
 
    <body align='center' style='background-color: gainsboro'>
       <?php
@@ -110,6 +110,5 @@
             </tr>
          </table>
       </form>
-      </body>
-
-      </html>
+   </body>
+</html>
