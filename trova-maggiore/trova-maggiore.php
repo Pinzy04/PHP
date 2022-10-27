@@ -33,18 +33,31 @@
 
     if(isset($_POST['B']))
     {
-        $_SESSION['mosse']++;
-
-        for($i = 0; $i < $r; $i++)
+        if($_SESSION['next'])
         {
-            for($j = 0; $j < $c; $j++)
+            $_SESSION['mosse']++;
+
+            for($i = 0; $i < $r; $i++)
             {
-                if(isset($_POST['B'][$i][$j]))
+                for($j = 0; $j < $c; $j++)
                 {
-                    $_SESSION['valori'][$i][$j] = 1;
-                }	 
-            } 
+                    if(isset($_POST['B'][$i][$j]))
+                    {
+                        $_SESSION['valori'][$i][$j] = 1;
+
+                        if($_SESSION['ult'] < $_SESSION['numeri'][$i][$j])
+                        {
+                            $_SESSION['ult'] = $_SESSION['numeri'][$i][$j];
+                        }
+                        else
+                        {
+                            $_SESSION['next'] = false;
+                        }
+                    }	 
+                } 
+            }
         }
+        
     }
 
 ?>
