@@ -1,102 +1,102 @@
 <?php
-
    $query="";
 
    if(isset($_POST['I']))
    {
-      // si connette al dbms (MySQL), fornendo, indirizzo, username, password
+      // si connette al databasems (MySQL), fornendo, indirizzo, username, password
       // prendo in uso il database specificato
-
-      $mysqli = new mysqli("localhost", "root", "", "scuola");
-      if ($mysqli->connect_errno) {
-         echo "non si connette: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+      $database = new mysqli("localhost", "root", "", "scuola");
+      if ($database->connect_errno) {
+         echo "non si connette: (" . $database->connect_errno . ") " . $database->connect_error;
       }
-
       $query=$_POST['A'];
-  
-	  
    }	   
    
 ?>
 
-<HTML>
+<!--
+   - visualizzare i voti di uno specifico studente;
+   - visualizzare i voti compresi tra un massimo e un minimo;
+   - visualizzare il voto minimo e il voto massimo per ciascuno studente.
+-->
 
-<BODY>
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Esercizio 1</title>
+   </head>
+   <body>
+      <form name='F1' method='post' action='<?php echo $_SERVER['PHP_SELF']; ?>' >
+         <br><br>
+         <textarea name='A' cols='40' rows='10'><?php echo $query; ?></TEXTAREA>
+         <br><br>
+         <input type='submit' name='I' value='invia'>
+      </form>
 
-   <FORM name='F1' method='post' action='<?php echo $_SERVER['PHP_SELF']; ?>' >
-     <TEXTAREA name='A' cols='40' rows='10'><?php echo $query; ?></TEXTAREA>
-     <BR><BR>
-     <INPUT type='submit' name='I' value='invia'>
-   </FORM>
-
-<?php
-
-if(isset($_POST['I']) && substr($query,0,6)=="SELECT")
-{
-	  // esegue la query proveniente dalla TEXTAREA
-	  // e produce un recordset
-	  if (!$risultato = $mysqli->query($query)) {
-		   echo $query;
-	  }
-
-	  // intestazioni colonne 
-	  // mysql_num_fields($risultato) ci dice
-	  // quante colonne ci sono in $risultato
-      for($i=0;$i<$risultato->field_count;$i++)
-      {
-		 // legge il nome di ciascuna colonna  presente in $risultato
-         echo $risultato->fetch_field_direct($i)->name." ";
-      }
-	  echo "<BR>";
-	  echo "<BR>";
-
-	  // qui viene visto ciascun record presente in $risultato
-      // e per ciascun record viene mostrato
-      // il valore di ciascun campo	 
-      while ($row=$risultato->fetch_row()) 
-      {
-         for($i=0;$i<$risultato->field_count;$i++)
+      <?php
+         if(isset($_POST['I']) && (substr($query,0,6)=="SELECT" || substr($query,0,6)=="select"))
          {
-            echo $row[$i]." ";
-	     }		
-         echo "<BR>";
-      }
-	  echo "<BR>";
-	  echo "<BR>";
+            // esegue la query proveniente dalla TEXTAREA
+            // e produce un recordset
+            if (!$risultato = $database->query($query)) {
+               echo "hai sbagliato qualcosa"."<br>".$query;
+            }
 
-   // stessa cosa di prima ma intabellata
-   // questa parte di codice va bene SEMPRE !!!!
+            // intestazioni colonne 
+            // mysql_num_fields($risultato) ci dice
+            // quante colonne ci sono in $risultato
+               for($i=0;$i<$risultato->field_count;$i++)
+               {
+               // legge il nome di ciascuna colonna  presente in $risultato
+                  echo $risultato->fetch_field_direct($i)->name." ";
+               }
+            echo "<br>";
+            echo "<br>";
 
-    if (!$risultato = $mysqli->query($query)) {
-	   echo $query;
-	}
+            // qui viene visto ciascun record presente in $risultato
+               // e per ciascun record viene mostrato
+               // il valore di ciascun campo	 
+               while ($row=$risultato->fetch_row()) 
+               {
+                  for($i=0;$i<$risultato->field_count;$i++)
+                  {
+                     echo $row[$i]." ";
+               }		
+                  echo "<br>";
+               }
+            echo "<br>";
+            echo "<br>";
 
-   echo "<TABLE border='1'>";
-   echo "<TR>";
-   
-   for($i=0;$i<$risultato->field_count;$i++)
-   {
-      echo "<TD><B>".$risultato->fetch_field_direct($i)->name."</B></TD>";
-   }
-   echo "</TR>";
+            // stessa cosa di prima ma intabellata
+            // questa parte di codice va bene SEMPRE !!!!
 
-   while ($row=$risultato->fetch_row()) 
-   {
-      echo "<TR>";
-      for($i=0;$i<$risultato->field_count;$i++)
-      {
+            if (!$risultato = $database->query($query)) {
+               echo "hai sbagliato qualcosa"."<br>".$query;
+            }
 
-         echo "<TD>".$row[$i]."</TD>";
+            echo "<table border='1'>";
+            echo "<tr>";
+            
+            for($i=0;$i<$risultato->field_count;$i++)
+            {
+               echo "<td><b>".$risultato->fetch_field_direct($i)->name."</b></td>";
+            }
+            echo "</tr>";
 
-      }
-      echo "</TR>";
-   }
-   echo "</TABLE>";
-
-}
-   
-?>
-   
-</BODY>
-
-</HTML>
+            while ($row=$risultato->fetch_row()) 
+            {
+               echo "<tr>";
+               for($i=0;$i<$risultato->field_count;$i++)
+               {
+                  echo "<td>".$row[$i]."</td>";
+               }
+               echo "</tr>";
+            }
+            echo "</table>";
+         }
+      ?>
+   </body>
+</html>
