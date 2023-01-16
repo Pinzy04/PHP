@@ -1,23 +1,23 @@
 <?php
     $query="";
 
-    if(isset($_POST['I1']) || isset($_POST['I2']) || isset($_POST['I3'])) {
+    if(isset($_POST['Invia1']) || isset($_POST['Invia2']) || isset($_POST['Invia3'])) {
         $database = new mysqli("localhost", "root", "", "scuola");
         if ($database -> connect_errno) {
             echo "non si connette: (".$database -> connect_errno.")".$database -> connect_error;
         }
-        if(isset($_POST['I1']))
+        if(isset($_POST['Invia1']))     //visualizzare i voti di uno specifico studente
             $query="SELECT Studenti.nome AS Nome, Studenti.cognome AS Cognome, Voti.voto AS Voto
                     FROM Voti
                     INNER JOIN Studenti ON Voti.ID_Studenti = Studenti.ID_Studenti
                     WHERE Studenti.nome = '".$_POST['nomeStudente']."' AND Studenti.cognome = '".$_POST['cognomeStudente']."';";
-        if(isset($_POST['I2']))
+        if(isset($_POST['Invia2']))     //visualizzare i voti compresi tra un massimo e un minimo
             $query="SELECT Studenti.nome AS Nome, Studenti.cognome AS Cognome, Voti.voto AS Voto
                     FROM Voti
                     INNER JOIN Studenti ON Voti.ID_Studenti = Studenti.ID_Studenti
                     WHERE Voti.voto < ".(int)$_POST['max']." AND Voti.voto > ".(int)$_POST['min']."
                     ORDER BY Voti.voto;";
-        if(isset($_POST['I3']))
+        if(isset($_POST['Invia3']))     //visualizzare il voto minimo e il voto massimo per ciascuno studente
             $query="SELECT Studenti.nome AS Nome, Studenti.cognome AS Cognome, MIN(Voti.voto) AS 'Voto minimo', MAX(Voti.voto) AS 'Voto massimo'
                     FROM Voti
                     INNER JOIN Studenti ON Voti.ID_Studenti = Studenti.ID_Studenti
@@ -25,12 +25,6 @@
                     ORDER BY Studenti.nome, Studenti.cognome;";
     }	   
 ?>
-
-<!--
-    - visualizzare i voti di uno specifico studente;
-    - visualizzare i voti compresi tra un massimo e un minimo;
-    - visualizzare il voto minimo e il voto massimo per ciascuno studente.
--->
 
 <!DOCTYPE html>
 <html lang="it">
@@ -49,24 +43,24 @@
                     <p> Visualizza voti di uno specifico studente inserendo il nome e il cognome: </p>
                     <input type='text' name='nomeStudente' placeholder='Nome dello studente...'>
                     <input type='text' name='cognomeStudente' placeholder='Cognome dello studente...'>
-                    <input type='submit' class="btn btn-dark" name='I1'>
+                    <input type='submit' class="btn btn-dark" name='Invia1'>
                 </div>
                 <br>
                 <div class="mb-3">
                     <p> Inserisci 2 numeri e visualizza i voti compresi tra i due numeri: </p>
                     <input type='text' name='min' placeholder='Numero più basso...'>
                     <input type='text' name='max' placeholder='Numero più alto...'>
-                    <input type='submit' class="btn btn-dark" name='I2'>
+                    <input type='submit' class="btn btn-dark" name='Invia2'>
                 </div>
                 <br>
                 <div class="mb-3">
                     <p> Visualizza il voto più alto e il voto più basso di ogni specifico studente: </p>
-                    <input type='submit' class="btn btn-dark" name='I3'>
+                    <input type='submit' class="btn btn-dark" name='Invia3'>
                 </div>
             </form>
 
             <?php
-                if(isset($_POST['I1']) || isset($_POST['I2']) || isset($_POST['I3'])) {
+                if(isset($_POST['Invia1']) || isset($_POST['Invia2']) || isset($_POST['Invia3'])) {
                     // esegue la query e produce un recordset
                     if (!$risultato = $database -> query($query)) {
                         echo $query;
