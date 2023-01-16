@@ -39,36 +39,22 @@ VALUES
 (4,2)
 
 
-Voti di uno specifico studente
-SELECT Studenti.nome, Studenti.cognome, Voti.voto 
-FROM Voti
-INNER JOIN Studenti ON Voti.ID_Studenti=Studenti.ID_Studenti
-WHERE Studenti.ID_Studenti=2;
+Voti di uno specifico studente:
+  SELECT Studenti.nome AS Nome, Studenti.cognome AS Cognome, Voti.voto AS Voto
+  FROM Voti
+  INNER JOIN Studenti ON Voti.ID_Studenti = Studenti.ID_Studenti
+  WHERE Studenti.nome = '".$_POST['nomeStudente']."' AND Studenti.cognome = '".$_POST['cognomeStudente']."';
 
-Conteggio voti per ogni studente
-SELECT Studenti.nome, Studenti.cognome, COUNT(Voti.ID_Voti) AS conta_voti 
-FROM Voti
-RIGHT JOIN Studenti ON Voti.ID_Studenti=Studenti.ID_Studenti
-GROUP BY Studenti.ID_Studenti 
-ORDER BY Studenti.nome, Studenti.cognome;
+Voti compresi tra un massimo e un minimo:
+  SELECT Studenti.nome AS Nome, Studenti.cognome AS Cognome, Voti.voto AS Voto
+  FROM Voti
+  INNER JOIN Studenti ON Voti.ID_Studenti = Studenti.ID_Studenti
+  WHERE Voti.voto < ".(int)$_POST['max']." AND Voti.voto > ".(int)$_POST['min']."
+  ORDER BY Voti.voto;
 
-Media voti per ogni studente
-SELECT Studenti.nome, Studenti.cognome, AVG(Voti.voto) AS media_voti 
-FROM Voti
-INNER JOIN Studenti ON Voti.ID_Studenti=Studenti.ID_Studenti
-GROUP BY Studenti.ID_Studenti 
-ORDER BY Studenti.nome, Studenti.cognome;
-
-Media voti complessiva
-SELECT  AVG(Voti.voto) AS media_totale 
-FROM Voti;
-
-Voto max per ogni studente
-SELECT Studenti.nome, Studenti.cognome, MAX(Voti.voto) AS voto_massimo  
-FROM Voti
-INNER JOIN Studenti ON Voti.ID_Studenti=Studenti.ID_Studenti
-GROUP BY Studenti.ID_Studenti 
-ORDER BY Studenti.nome, Studenti.cognome;
-
-
-
+Voto minimo e voto massimo per ciascuno studente:
+  SELECT Studenti.nome AS Nome, Studenti.cognome AS Cognome, MIN(Voti.voto) AS 'Voto minimo', MAX(Voti.voto) AS 'Voto massimo'
+  FROM Voti
+  INNER JOIN Studenti ON Voti.ID_Studenti = Studenti.ID_Studenti
+  GROUP BY Studenti.ID_Studenti 
+  ORDER BY Studenti.nome, Studenti.cognome;
