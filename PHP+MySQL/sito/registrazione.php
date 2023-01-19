@@ -18,7 +18,7 @@
             }
             if (!$esiste)
             {
-                $database -> query("INSERT INTO utenti( `Nome`, `Cognome`, `Username`, `Password`, `Livello` ) VALUES( ".$_POST['name'].", ".$_POST['surname'].", ".$_POST['username'].", ".$_POST['password'].", 1 );");
+                $database -> query("INSERT INTO utenti( `Nome`, `Cognome`, `Username`, `Password`, `Livello` ) VALUES( '".$_POST['name']."', '".$_POST['surname']."', '".$_POST['username']."', '".$_POST['password']."', 1 );");
                 echo "<script language = 'javascript'> alert('Utente registrato con successo. Esegui l\'accesso alla pagina di login.'); </script>";
                 header("Location: ./login.php");
             }
