@@ -27,7 +27,7 @@
         header("location: ./pagina1.php");  //va alla pagina 1
     }
 
-    if (isset($_POST['signUp']))    //se viene cliccato il tasto di registrazione ("Registrati")
+    if (isset($_POST['signUp']))    //se viene cliccato il tasto di signup ("Registrati")
     {
         header("location: ./registrazione.php");    //va alla pagina di registrazione
     }
