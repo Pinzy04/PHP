@@ -37,6 +37,7 @@
     {
         if(($_POST['useredit'] != -1) && ($_POST['level'] != -1))
         {
+            //da sistemare
             $database -> query("UPDATE utenti SET livello = ".$_POST['level']." WHERE Username=='".$_POST['useredit']."';");
         }
     }
@@ -45,6 +46,7 @@
     {
         if($_POST['userdelete'] != -1)
         {
+            //da sistemare
             $database -> query("DELETE FROM utenti WHERE Username='".$_POST['userdelete']."';");
         }
     }
