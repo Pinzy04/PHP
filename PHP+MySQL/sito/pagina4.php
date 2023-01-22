@@ -35,21 +35,17 @@
 
     if (isset($_POST['edit']))
     {
-        if(($_POST['nomeutente1'] != -1) && ($_POST['level'] != -1))
+        if(($_POST['useredit'] != -1) && ($_POST['level'] != -1))
         {
-            $database -> query("SELECT * FROM Utenti WHERE 1")[$_POST['nomeutente1']]['Livello'] = $_POST['level'];
-            file_put_contents('./users.json', json_encode($_SESSION['utente'], JSON_PRETTY_PRINT));
+            $database -> query("UPDATE utenti SET livello = ".$_POST['level']." WHERE Username=='".$_POST['useredit']."';");
         }
     }
 
-    if (isset($_POST['remove']))
+    if (isset($_POST['delete']))
     {
-        if($_POST['nomeutente2'] != -1)
+        if($_POST['userdelete'] != -1)
         {
-            //da finire
-            $database -> query("UPDATE utenti SET livello = REPLACE(livello, '10128', '10121')")
-            array_splice($database -> query("SELECT * FROM Utenti WHERE 1"),$_POST['nomeutente2'],1);
-            file_put_contents('./users.json', json_encode($_SESSION['utente'], JSON_PRETTY_PRINT));
+            $database -> query("DELETE FROM utenti WHERE Username='".$_POST['userdelete']."';");
         }
     }
 ?>
@@ -75,7 +71,7 @@
                     echo "SELECT * FROM Utenti WHERE 1";
                 }
 
-                echo "<table class='table-responsive table-bordered'>";
+                echo "<table align='center' class='table table-bordered'>";
                 echo "<thead>";
                 for($i = 0; $i < $risultato -> field_count; $i++) {
                     echo "<td><b>".$risultato -> fetch_field_direct($i) -> name."</b></td>";
@@ -93,8 +89,8 @@
 
             <form action = "pagina4.php" method = "post">
                 <p> Per modificare il livello di accesso di un utente selezionare l'username e il livello nei campi sottostanti. </p>
-                <label for="nomeutente1"> Username: </label>
-                <select name="nomeutente1" id="utenti1">
+                <label for="useredit"> Username: </label>
+                <select name="useredit">
                     <option value = -1> Seleziona utente</option>
                     <?php
                         $i = 0;
@@ -116,8 +112,8 @@
                 <input type = "submit" name = "edit" value = "Modifica" class = "btn btn-primary">
 
                 <p> Per elimiare un utente selezionare l'username nel campo sottostante. </p>
-                <label for="nomeutente2"> Username: </label>
-                <select name="nomeutente2" id="utenti2">
+                <label for="userdelete"> Username: </label>
+                <select name="userdelete">
                     <option value = -1> Seleziona utente</option>
                     <?php
                         $i = 0;
@@ -129,7 +125,7 @@
                     ?>
                 </select>
                 <br><br>
-                <input type = "submit" name = "remove" value = "Rimuovi" class = "btn btn-primary">
+                <input type = "submit" name = "delete" value = "Elimina" class = "btn btn-primary">
             </form>
             <br>
             <p>Da questa pagina puoi segliere se effettuare il logout e tornare alla pagina di login, andare alla pagina 1, alla pagina 2 oppure alla pagina 4.</p>
