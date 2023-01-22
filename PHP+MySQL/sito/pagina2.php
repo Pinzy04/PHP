@@ -1,9 +1,9 @@
 <?php
     session_start();
 
-    if (!isset($_SESSION['selectedUser']))
+    if (!isset($_SESSION['selectedUser']))  //se l'utente non è loggato
     {
-        header('Location: ./login.php');
+        header('Location: ./login.php');    //torna alla pagina di login
     }
 
     if (isset($_POST['logout']))

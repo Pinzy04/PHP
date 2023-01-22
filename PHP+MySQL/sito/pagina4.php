@@ -6,9 +6,9 @@
         echo "non si connette: (".$database -> connect_errno.")".$database -> connect_error;
     }
 
-    if (!isset($_SESSION['selectedUser']))
+    if (!isset($_SESSION['selectedUser']))  //se l'utente non è loggato
     {
-        header('Location: ./login.php');
+        header('Location: ./login.php');    //torna alla pagina di login
     }
 
     if (isset($_POST['logout']))
