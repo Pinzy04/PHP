@@ -41,10 +41,10 @@ CREATE TABLE `utenti` (
 --
 
 INSERT INTO `utenti` (`Nome`, `Cognome`, `Username`, `Password`, `Livello`) VALUES
-('Fabio', 'Pinzarrone', 'fabiopinza', 'F4b1o074', 2),
-('Andrea', 'Davoli', 'driu', 'ciao', 1),
-('Nicho', 'Las', 'val', 'enzano', 1),
-('edu', 'sascu', 'edusascu', 'ciao', 1);
+('Fabio', 'Pinzarrone', 'fabiopinza', 'password', 2),
+('Utente', 'Amministratore', 'admin', 'admin', 1),
+('Andrea', 'Davoli', 'driu', 'delfinogiallo', 1),
+('Eduard', 'Sascau', 'sascu', 'AIUTO', 1);
 
 --
 -- Indici per le tabelle scaricate
@@ -64,7 +64,7 @@ ALTER TABLE `utenti`
 -- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
-  MODIFY `ID_Utente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID_Utente` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

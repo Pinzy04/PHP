@@ -1,39 +1,27 @@
 <?php
     session_start();
     
-    if (isset($_POST['signUp']))
+    if (isset($_POST['signUp']))    //se viene cliccato il tasto di signup ("Registrati")
     {   
-        $database = new mysqli("localhost", "root", "", "utenze");
-        if (($_POST['name'] != "") && ($_POST['surname'] != "") && ($_POST['username'] != "") && ($_POST['password'] != ""))
+        $database = new mysqli("localhost", "root", "", "utenze");  //recupera il database
+        $esiste = false;
+        foreach($database -> query("SELECT * FROM Utenti WHERE 1") as $user)    //cerca un utente con l'username uguale all'username inserito
         {
-            $esiste = false;
-            foreach($database -> query("SELECT * FROM Utenti WHERE 1") as $user)
+            if ($user['Username'] == $_POST['username'])    //se l'username inserito esiste già nel database
             {
-                if ($user['Username'] == $_POST['username'])
-                {
-                    echo "<script language = 'javascript'> alert('Username già utilizzato da un altro utente.'); </script>";
-                    $esiste = true;
-                    break;
-                }
-            }
-            if (!$esiste)
-            {
-                $database -> query("INSERT INTO utenti( `Nome`, `Cognome`, `Username`, `Password`, `Livello` ) VALUES( '".$_POST['name']."', '".$_POST['surname']."', '".$_POST['username']."', '".$_POST['password']."', 1 );");
-                echo "<script language = 'javascript'> alert('Utente registrato con successo. Esegui l\'accesso alla pagina di login.'); </script>";
-                header("Location: ./login.php");
+                echo "<script language = 'javascript'> alert('Username già utilizzato da un altro utente.'); </script>";
+                $esiste = true;
+                break;
             }
         }
-        else
+        if (!$esiste)   //se l'username inserito non esiste già nel database
         {
-            echo "<script language = 'javascript'> alert('Alcuni dati sono mancanti'); </script>";
+            //inserisce i dati inseriti nel database e torna alla pagina di login
+            $database -> query("INSERT INTO utenti( `Nome`, `Cognome`, `Username`, `Password`, `Livello` ) VALUES( '".$_POST['name']."', '".$_POST['surname']."', '".$_POST['username']."', '".$_POST['password']."', 1 );");
+            echo "<script language = 'javascript'> alert('Utente registrato con successo. Esegui l\'accesso alla pagina di login.'); </script>";
+            header("Location: ./login.php");    //torna alla pagina di login
         }
     }
-
-    if (isset($_POST['login']))
-    {
-        header("location: ./login.php");
-    }
-    
 ?>
 
 <!doctype html>
@@ -47,15 +35,14 @@
         <div align = "center" class = "box">
             <h2> Registrati al sito </h2> <br>
             <form action = "registrazione.php" method = "post">
-                <p> Nome: <input type = "text" name = "name" size = "40"></p>
-                <p> Cognome: <input type = "text" name = "surname" size = "40"></p>
-                <p> Username: <input type = "text" name = "username" size = "40"></p>
-                <p> Password: <input type = "password" name = "password" size = "40"></p>
-                <p>
-                    <input type = "submit" name = "signUp" value = "Registra" class = "btn btn-primary">
-                    <input type = "reset" name = "cancella" value = "Cancella" class = "btn btn-primary"> <br><br>
-                    <input type = "submit" name = "login" value = "Torna al login" class = "btn btn-primary">
-                </p>
+                <p> Nome: <input type = "text" name = "name" size = "40" required></p>
+                <p> Cognome: <input type = "text" name = "surname" size = "40" required></p>
+                <p> Username: <input type = "text" name = "username" size = "40" required></p>
+                <p> Password: <input type = "password" name = "password" size = "40" required></p>
+                <p><input type = "submit" name = "signUp" value = "Registrati" class = "btn btn-primary"></p>
+            </form>
+            <form action = "login.php" method = "post">
+                <p><input type = "submit" name = "login" value = "Torna al login" class = "btn btn-primary"></p>
             </form>
         </div>
     </body>

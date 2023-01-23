@@ -6,32 +6,37 @@
         header('Location: ./login.php');    //torna alla pagina di login
     }
 
-    if (isset($_POST['logout']))
+    if(!$_SESSION['selectedUser']['Livello'] >= 1)   //controlla se l'utente ha il livello necessario per accedere alla pagina
+    {
+        header('Location: ./acc_neg.php');  //va alla pagina di accesso negato
+    }
+
+    if (isset($_POST['logout']))    //se viene cliccato il tasto di logout ("Effetua il logout")
     {
         session_destroy();
-        header('Location: ./login.php');
+        header('Location: ./login.php');    //torna alla pagina di login
         exit;
     }
 
-    if (isset($_POST['GoToP1']))
+    if (isset($_POST['GoToP1']))    //se viene cliccato il tasto della pagina 1 ("Vai a Pagina 1")
     {
-        header('Location: ./pagina1.php');
+        header('Location: ./pagina1.php');  //va alla pagina 1
     }
     
-    if (isset($_POST['GoToP2']))
+    if (isset($_POST['GoToP2']))    //se viene cliccato il tasto della pagina 2 ("Vai a Pagina 2")
     {
-        header('Location: ./pagina2.php');
+        header('Location: ./pagina2.php');  //va alla pagina 2
     }
     
     if (isset($_POST['GoToP4']))
     {
-        if($_SESSION['selectedUser']['Livello'] >= 2)
+        if($_SESSION['selectedUser']['Livello'] >= 2)   //controlla se l'utente ha il livello necessario per accedere alla pagina
         {
-            header('Location: ./pagina4.php');
+            header('Location: ./pagina4.php');  //va alla pagina 4
         }
         else
         {
-            header('Location: ./acc_neg.php');
+            header('Location: ./acc_neg.php');  //va alla pagina di accesso negato
         }
     }
 ?>

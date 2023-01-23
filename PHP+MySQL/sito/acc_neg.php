@@ -1,16 +1,21 @@
 <?php
     session_start();
 
-    if (isset($_POST['logout']))
+    if (!isset($_SESSION['selectedUser']))  //se l'utente non è loggato
+    {
+        header('Location: ./login.php');    //torna alla pagina di login
+    }
+
+    if (isset($_POST['logout']))    //se viene cliccato il tasto di logout ("Effetua il logout")
     {
         session_destroy();
-        header('Location: ./login.php');
+        header('Location: ./login.php');    //torna alla pagina di login
         exit;
     }
 
-    if (isset($_POST['GoToP1']))
+    if (isset($_POST['GoToP1']))    //se viene cliccato il tasto della pagina 1 ("Vai a Pagina 1")
     {
-        header('Location: ./pagina1.php');
+        header('Location: ./pagina1.php');  //va alla pagina 1
     }
 ?>
 

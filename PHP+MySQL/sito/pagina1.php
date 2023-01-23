@@ -6,16 +6,16 @@
         header('Location: ./login.php');    //torna alla pagina di login
     }
 
-    if (isset($_POST['logout']))
+    if (isset($_POST['logout']))    //se viene cliccato il tasto di logout ("Effetua il logout")
     {
         session_destroy();
-        header('Location: ./login.php');
+        header('Location: ./login.php');    //torna alla pagina di login
         exit;
     }
 
-    if (isset($_POST['GoToP2']))
+    if (isset($_POST['GoToP2']))    //se viene cliccato il tasto della pagina 2 ("Vai a Pagina 2")
     {
-        header('Location: ./pagina2.php');
+        header('Location: ./pagina2.php');  //va alla pagina 2
     }
 ?>
 
