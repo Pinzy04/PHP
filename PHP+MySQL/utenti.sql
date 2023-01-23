@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `utenti` (
-  `ID_Utente` int(11) NOT NULL,
+  `ID_Utente` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `Nome` varchar(30) NOT NULL,
   `Cognome` varchar(30) NOT NULL,
   `Username` varchar(30) NOT NULL,
@@ -46,26 +46,6 @@ INSERT INTO `utenti` (`Nome`, `Cognome`, `Username`, `Password`, `Livello`) VALU
 ('Andrea', 'Davoli', 'driu', 'delfinogiallo', 1),
 ('Eduard', 'Sascau', 'sascu', 'AIUTO', 1);
 
---
--- Indici per le tabelle scaricate
---
-
---
--- Indici per le tabelle `utenti`
---
-ALTER TABLE `utenti`
-  ADD PRIMARY KEY (`ID_Utente`);
-
---
--- AUTO_INCREMENT per le tabelle scaricate
---
-
---
--- AUTO_INCREMENT per la tabella `utenti`
---
-ALTER TABLE `utenti`
-  MODIFY `ID_Utente` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
