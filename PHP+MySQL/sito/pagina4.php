@@ -37,8 +37,9 @@
     {
         if(($_POST['useredit'] != -1) && ($_POST['level'] != -1))
         {
-            //da sistemare
-            $database -> query("UPDATE utenti SET livello = ".$_POST['level']." WHERE Username=='".$_POST['useredit']."';");
+            $id_utente = $_POST['useredit'];
+            $livello = $_POST['level'];
+            $database -> query("UPDATE utenti SET livello = '$livello' WHERE ID_Utente = '$id_utente';");
         }
     }
 
@@ -46,8 +47,8 @@
     {
         if($_POST['userdelete'] != -1)
         {
-            //da sistemare
-            $database -> query("DELETE FROM utenti WHERE Username='".$_POST['userdelete']."';");
+            $id_utente = $_POST['userdelete'];
+            $database -> query("DELETE FROM utenti WHERE ID_Utente = '$id_utente';");
         }
     }
 ?>
@@ -95,17 +96,15 @@
                 <select name="useredit">
                     <option value = -1> Seleziona utente</option>
                     <?php
-                        $i = 0;
                         foreach($database -> query("SELECT * FROM Utenti WHERE 1") as $user)
                         {
-                            echo "<option value = ".$i.">".$user['Username']."</option>";
-                            $i++;
+                            echo "<option value = ".$user['ID_Utente'].">".$user['Username']."</option>";
                         }
                     ?>
                 </select>
 
                 <label for="level"> livello </label>
-                <select name = "level" id="livelli">
+                <select name = "level">
                     <option value = -1> Scegli il livello</option>
                     <option value = 1> normale </option>
                     <option value = 2> amministratore </option>
@@ -118,11 +117,9 @@
                 <select name="userdelete">
                     <option value = -1> Seleziona utente</option>
                     <?php
-                        $i = 0;
                         foreach($database -> query("SELECT * FROM Utenti WHERE 1") as $user)
                         {
-                            echo "<option value = ".$i.">".$user['Username']."</option>";
-                            $i++;
+                            echo "<option value = ".$user['ID_Utente'].">".$user['Username']."</option>";
                         }
                     ?>
                 </select>

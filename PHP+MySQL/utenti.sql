@@ -40,11 +40,11 @@ CREATE TABLE `utenti` (
 -- Dump dei dati per la tabella `utenti`
 --
 
-INSERT INTO `utenti` (`ID_Utente`, `Nome`, `Cognome`, `Username`, `Password`, `Livello`) VALUES
-(1, 'Fabio', 'Pinzarrone', 'fabiopinza', 'F4b1o074', 2),
-(2, 'Andrea', 'Davoli', 'driu', 'ciao', 1),
-(3, 'Nicho', 'Las', 'val', 'enzano', 1),
-(4, 'edu', 'sascu', 'edusascu', 'ciao', 1);
+INSERT INTO `utenti` (`Nome`, `Cognome`, `Username`, `Password`, `Livello`) VALUES
+('Fabio', 'Pinzarrone', 'fabiopinza', 'F4b1o074', 2),
+('Andrea', 'Davoli', 'driu', 'ciao', 1),
+('Nicho', 'Las', 'val', 'enzano', 1),
+('edu', 'sascu', 'edusascu', 'ciao', 1);
 
 --
 -- Indici per le tabelle scaricate
