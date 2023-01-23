@@ -46,6 +46,11 @@
             <form action = "login.php" method = "post">
                 <p> Username: <input type = "text" name = "username" size = "40" required></p>
                 <p> Password: <input type = "password" name = "password" size = "40" required></p>
+                <p> 
+                    Per accedere come amministratore usare le seguenti credenziali: <br>
+                    Username -> "admin" <br>
+                    Password -> "admin"
+                </p>
                 <p><input type = "submit" name = "signIn" value = "Accedi" class = "btn btn-primary"></p>
             </form>
             <form action = "login.php" method = "post">
