@@ -42,7 +42,7 @@ CREATE TABLE `utenti` (
 
 INSERT INTO `utenti` (`Nome`, `Cognome`, `Username`, `Password`, `Livello`) VALUES
 ('Fabio', 'Pinzarrone', 'fabiopinza', 'password', 2),
-('Utente', 'Amministratore', 'admin', 'admin', 1),
+('Utente', 'Amministratore', 'admin', 'admin', 2),
 ('Andrea', 'Davoli', 'driu', 'delfinogiallo', 1),
 ('Eduard', 'Sascau', 'sascu', 'AIUTO', 1);
 
