@@ -44,7 +44,8 @@ INSERT INTO `utenti` (`Nome`, `Cognome`, `Username`, `Password`, `Livello`) VALU
 ('Fabio', 'Pinzarrone', 'fabiopinza', 'password', 2),
 ('Utente', 'Amministratore', 'admin', 'admin', 2),
 ('Andrea', 'Davoli', 'driu', 'delfinogiallo', 1),
-('Eduard', 'Sascau', 'sascu', 'AIUTO', 1);
+('Eduard', 'Sascau', 'sascu', 'AIUTO', 1),
+('Nicholas', 'Valenzano', 'NichoZ', 'pollo', 9);
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
