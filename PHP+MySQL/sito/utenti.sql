@@ -33,8 +33,20 @@ CREATE TABLE `utenti` (
   `Cognome` varchar(30) NOT NULL,
   `Username` varchar(30) NOT NULL,
   `Password` varchar(30) NOT NULL,
-  `Livello` int(1) NOT NULL
+  `Livello` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Struttura della tabella `spese`
+--
+
+CREATE TABLE spese (
+   ID_Spese INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   ID_Utente INT NOT NULL,
+   dataspesa DATE NOT NULL,
+   importo NUMERIC(6,2) NOT NULL,
+   descrizione VARCHAR(50)
+);
 
 --
 -- Dump dei dati per la tabella `utenti`
@@ -47,6 +59,14 @@ INSERT INTO `utenti` (`Nome`, `Cognome`, `Username`, `Password`, `Livello`) VALU
 ('Eduard', 'Sascau', 'sascu', 'AIUTO', 1),
 ('Nicholas', 'Valenzano', 'NichoZ', 'pollo', 9);
 
+--
+-- Dump dei dati per la tabella `spese`
+--
+
+INSERT INTO `spese` (`ID_Utente`,`dataspesa`,`importo`,`descrizione`) VALUES
+(2,20230204,45.50,'pranzo'),
+(2,20230205,60.00,'carburante'),
+(1,20230204,100.00,'hotel');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
