@@ -29,7 +29,7 @@
     <body>
         <div align="center" class="box">
             <h2> OPS... <br> Non hai i privilegi necessari per accedere a questa pagina! </h2>
-            <img src="./accesso_negato.jpg"> <br>
+            <img src="./images/accesso_negato.jpg"> <br>
             <?php
                 echo "Nome: ".$_SESSION['selectedUser']['Nome']."<br>";
                 echo "Cognome: ".$_SESSION['selectedUser']['Cognome']."<br>";
