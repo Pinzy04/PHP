@@ -29,7 +29,7 @@
     <body>
         <div align="center" class="box">
             <h2> Benvenuto nella pagina 1 </h2>
-            <img src="./pagina1.jpg"> <br>
+            <img src="./images/pagina1.jpg"> <br>
             <?php
                 echo "Nome: ".$_SESSION['selectedUser']['Nome']."<br>";
                 echo "Cognome: ".$_SESSION['selectedUser']['Cognome']."<br>";
