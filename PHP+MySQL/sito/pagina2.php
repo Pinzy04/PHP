@@ -41,7 +41,7 @@
     <body>
         <div align="center" class="box">
             <h2> Benvenuto nella pagina 2 </h2>
-            <img src="./pagina2.jpg"> <br>
+            <img src="./images/pagina2.jpg"> <br>
             <?php
                 echo "Nome: ".$_SESSION['selectedUser']['Nome']."<br>";
                 echo "Cognome: ".$_SESSION['selectedUser']['Cognome']."<br>";
@@ -55,7 +55,7 @@
             <form action="pagina2.php" method="post">
                 <input type="submit" name="logout" value="Effetua il logout" class="btn btn-primary">
                 <input type="submit" name="GoToP1" value="Vai a Pagina 1" class="btn btn-primary">
-                <input type="submit" name="GoToP3" value="Vai a Pagina 3" class="btn btn-primary">
+                <input type="submit" name="GoToP3" value="Vai alla pagina di gestione delle spese degli agenti" class="btn btn-primary">
             </form>
             <br><br>
         </div>
