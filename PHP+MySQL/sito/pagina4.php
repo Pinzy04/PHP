@@ -66,8 +66,8 @@
     </head>
     <body>
         <div align="center" class="box">
-            <h2> Benvenuto nella pagina 4 </h2>
-            <img src="./pagina4.jpg"> <br>
+            <h2> Benvenuto nella pagina di gestione degli utenti </h2>
+            <img src="./images/pagina4.jpg"> <br>
             <?php
                 echo "Nome: ".$_SESSION['selectedUser']['Nome']."<br>";
                 echo "Cognome: ".$_SESSION['selectedUser']['Cognome']."<br>";
@@ -95,7 +95,7 @@
                 echo "</table>";
             ?>
 
-            <form action="pagina4.php" method="post">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <p> Per modificare il livello di accesso di un utente selezionare l'username e il livello nei campi sottostanti. </p>
                 <label for="useredit"> Username: </label>
                 <select name="useredit">
@@ -111,7 +111,7 @@
                 <label for="level"> livello </label>
                 <select name="level">
                     <option value=-1> Scegli il livello</option>
-                    <option value=1> normale </option>
+                    <option value=1> agente </option>
                     <option value=2> amministratore </option>
                 </select>
                 <br><br>
@@ -138,7 +138,7 @@
                 <input type="submit" name="logout" value="Effetua il logout" class="btn btn-primary">
                 <input type="submit" name="GoToP1" value="Vai a Pagina 1" class="btn btn-primary">
                 <input type="submit" name="GoToP2" value="Vai a Pagina 2" class="btn btn-primary">
-                <input type="submit" name="GoToP3" value="Vai a Pagina 3" class="btn btn-primary">
+                <input type="submit" name="GoToP3" value="Vai alla pagina di gestione delle spese degli agenti" class="btn btn-primary">
             </form>
             <br><br>
         </div>
