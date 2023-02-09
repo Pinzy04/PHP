@@ -49,12 +49,9 @@
         $ID = $_SESSION['selectedUser']['ID_Utente'];
         
         $query1 = "";
-        $query1 = $query1."INSERT INTO Spese ";
-        $query1 = $query1."(ID_Utenti,dataspesa,importo,descrizione) ";
-        $query1 = $query1."VALUES ";
-        $query1 = $query1."(".$ID.",".$dataspesa.",".$importo.",'".$descrizione."')";
+        $query1 = $query1."INSERT INTO Spese (ID_Utente,dataspesa,importo,descrizione) VALUES (".$ID.",".$dataspesa.",".$importo.",'".$descrizione."')";
   
-        if (!$risultato1 = $database->query("INSERT INTO Spese (ID_Utenti,dataspesa,importo,descrizione) VALUES ".$ID.",".$dataspesa.",".$importo.",'".$descrizione."')")) {
+        if (!$risultato1 = $database->query("INSERT INTO Spese (ID_Utente,dataspesa,importo,descrizione) VALUES (".$ID.",".$dataspesa.",".$importo.",'".$descrizione."')")) {
            echo $query1;
         }
   
@@ -74,13 +71,13 @@
             <h2> Benvenuto nella pagina di gestione delle spese degli agenti</h2>
 
             <?php
-                if (!$risultato = $database->query("SELECT Utenti.Cognome,Utenti.Nome,Spese.dataspesa,Spese.importo,Spese.descrizione FROM Spese INNER JOIN Utenti ON Spese.ID_Utente=Utenti.ID_Utente WHERE Utenti.ID_Utente=".$_SESSION['selectedUser']['ID_Utente'])) {
+                if (!$risultato = $database->query("SELECT Utenti.Nome,Utenti.Cognome,Spese.dataspesa,Spese.importo,Spese.descrizione FROM Spese INNER JOIN Utenti ON Spese.ID_Utente=Utenti.ID_Utente WHERE Utenti.ID_Utente=".$_SESSION['selectedUser']['ID_Utente'])) {
                     echo "SELECT Utenti.Cognome,Utenti.Nome,Spese.dataspesa,Spese.importo,Spese.descrizione FROM Spese INNER JOIN Utenti ON Spese.ID_Utente=Utenti.ID_Utente WHERE Utenti.ID_Utenti=".$_SESSION['selectedUser']['ID_Utente'];
                 }
 
                 echo "<H3>Agente :".$_SESSION['selectedUser']['Nome']." ".$_SESSION['selectedUser']['Cognome']."</H3>";   
 
-                echo "<TABLE border='1'>";
+                echo "<TABLE align='center' class='table table-bordered'>";
                 echo "<TR>";
 
                 for($i=0;$i<$risultato->field_count;$i++)
@@ -104,8 +101,8 @@
             ?>
             <H4>REGISTRAZIONE NUOVA SPESA</H4> 
             <FORM name='F1' method='post' action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                data spesa:<INPUT type='text' name='SD' size='4' value=''>&nbsp;&nbsp;
-                importo:<INPUT type='text' name='SI' size='4' value=''>&nbsp;&nbsp;
+                data spesa:<INPUT type='date' name='SD' size='4' value='' requred>&nbsp;&nbsp;
+                importo:<INPUT type='number' name='SI' size='4' value='' required>&nbsp;&nbsp;
                 descrizione:<INPUT type='text' name='ST' size='8' value=''>&nbsp;&nbsp;
                 <INPUT type='submit' name='SC' value='Nuova spesa'>
             </FORM>
@@ -125,5 +122,15 @@
             </form>
             <br><br>
         </div>
+        <script>
+            function today() {
+                let  today 		= new Date();
+	            let  dd 		= String(today.getDate()).padStart(2, '0');
+	            let  mm 		= String(today.getMonth() + 1).padStart(2, '0'); //janvier = 0
+	            let  yyyy 		= today.getFullYear();
+  
+	            return `${yyyy}-${mm}-${dd}`;
+            }
+        </script>
     </body>
 </html>
