@@ -74,7 +74,7 @@
                 echo "Livello: ".$_SESSION['selectedUser']['Livello']."<br>";
 
                 // esegue la query e produce un recordset
-                if (!$risultato=$database -> query("SELECT * FROM Utenti WHERE 1")) {
+                if (!$risultato=$database -> query("SELECT Utenti.Nome,Utenti.Cognome,Utenti.Username,Utenti.Livello FROM Utenti WHERE 1")) {
                     echo "SELECT * FROM Utenti WHERE 1";
                 }
 
