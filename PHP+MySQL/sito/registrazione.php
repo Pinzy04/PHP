@@ -18,7 +18,13 @@
         {
             if ($_POST['password'] == $_POST['cpassword']) {    //se le password non corrispondono
                 //inserisce i dati inseriti nel database e torna alla pagina di login
-                $database -> query("INSERT INTO utenti( `Nome`, `Cognome`, `Username`, `Password`, `Livello` ) VALUES( '".$_POST['name']."', '".$_POST['surname']."', '".$_POST['username']."', '".$_POST['password']."', 9 );");
+                
+                $options = [
+                    'cost' => 12,
+                ];
+                $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT, $options); //criptazione password
+
+                $database -> query("INSERT INTO utenti( `Nome`, `Cognome`, `Username`, `Password`, `Livello` ) VALUES( '".$_POST['name']."', '".$_POST['surname']."', '".$_POST['username']."', '".$hashedPassword."', 9 );");
                 echo "<script language='javascript'> alert('Utente registrato con successo. Esegui l\'accesso alla pagina di login.'); </script>";
                 header("Location: ./login.php");    //torna alla pagina di login
             } else {
