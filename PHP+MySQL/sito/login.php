@@ -7,11 +7,12 @@
     {  
         $database=new mysqli("localhost", "root", "", "utenze");  //recupera il database
         if ($database -> connect_errno) {
-            echo "non si connette: (".$database -> connect_errno.")".$database -> connect_error;
+            echo "non si connette: (".$database -> connect_errno.")".$database -> connect_error; 
         }
+
         foreach($database -> query("SELECT * FROM Utenti WHERE 1") as $user)    //cerca l'utente con la relativa password
         {
-            if (($user['Username'] == $_POST['username']) && ($user['Password'] == $_POST['password'])) //quando viene trovato
+            if (($user['Username'] == $_POST['username']) && (password_verify($_POST['password'], $user['Password']) || ($user['Password'] == $_POST['password']))) //quando viene trovato (password_verify() decripta la password dal database e la confronta con quella inserita)
             {
                 $_SESSION['selectedUser']=$user;  //prende i dati dell'utente dal database e li mette in un array di sessione
                 header("location: ./pagina1.php");  //va alla pagina 1
