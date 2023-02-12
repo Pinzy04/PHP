@@ -31,17 +31,20 @@
     }
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Pagina 2 </title>
         <link rel='stylesheet' type='text/css' href='style.css'>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <div align="center" class="box">
-            <h2> Benvenuto nella pagina 2 </h2>
-            <img src="./images/pagina2.jpg"> <br>
+        <div align=center class="container-fluid">
+            <h1> Benvenuto nella pagina 2 </h1><br>
+            <img src="./images/pagina2.jpg" class="figure-img img-fluid rounded"> <br>
             <?php
                 echo "Nome: ".$_SESSION['selectedUser']['Nome']."<br>";
                 echo "Cognome: ".$_SESSION['selectedUser']['Cognome']."<br>";
@@ -52,7 +55,7 @@
             ?>
             <p>Da questa pagina puoi segliere se effettuare il logout e tornare alla pagina di login, andare alla pagina 1 oppure alla pagina 3.</p>
             
-            <form action="pagina2.php" method="post">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <input type="submit" name="logout" value="Effetua il logout" class="btn btn-primary">
                 <input type="submit" name="GoToP1" value="Vai a Pagina 1" class="btn btn-primary">
                 <input type="submit" name="GoToP3" value="Vai alla pagina di gestione delle spese degli agenti" class="btn btn-primary">

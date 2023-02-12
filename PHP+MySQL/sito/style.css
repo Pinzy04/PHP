@@ -1,14 +1,13 @@
-.box
-{
+.utente {
     text-align: center;
     font-size: 20px;
-    width: 700px;
-    height: 500px;
     margin: auto;
     padding: 10px;
+    border-style: dashed;
+    border: 1 solid black;
+    background-color: darkgrey;
 }
 
-body
-{
+body {
     background-color: Lavender;
 }

@@ -43,94 +43,97 @@
    
 
     if (isset($_POST['SC'])) {
-        $dataspesa = $_POST['SD'];
-        $importo = $_POST['SI'];
-        $descrizione = $_POST['ST'];
-        $ID = $_SESSION['selectedUser']['ID_Utente'];
-        
-        $query1 = "";
-        $query1 = $query1."INSERT INTO Spese (ID_Utente,dataspesa,importo,descrizione) VALUES (".$ID.",".$dataspesa.",".$importo.",'".$descrizione."')";
+        $query="INSERT INTO Spese (ID_Utente,dataspesa,importo,descrizione) VALUES (".$_SESSION['selectedUser']['ID_Utente'].",".$_POST['DataSpesa'].",".$_POST['ImportoSpesa'].",'".$_POST['DescSpesa']."')";
   
-        if (!$risultato1 = $database->query("INSERT INTO Spese (ID_Utente,dataspesa,importo,descrizione) VALUES (".$ID.",".$dataspesa.",".$importo.",'".$descrizione."')")) {
-           echo $query1;
+        if (!$risultato1 = $database->query($query)) {
+           echo $query;
         }
   
      }	   
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Gestione spese agenti </title>
-        <link rel='stylesheet' type='text/css' href='style.css'>
+        <link rel='stylesheet' type='text/css' href='./style.css'>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        
-        <div align="center" class="box">
-            <h2> Benvenuto nella pagina di gestione delle spese degli agenti</h2>
-
+        <div align=center class="container-fluid">
+            <h1> Benvenuto nella pagina di gestione delle spese degli agenti</h1><br>
+            <img src="./images/pagina3.jpg" class="figure-img img-fluid rounded"> <br>
             <?php
-                if (!$risultato = $database->query("SELECT Utenti.Nome,Utenti.Cognome,Spese.dataspesa,Spese.importo,Spese.descrizione FROM Spese INNER JOIN Utenti ON Spese.ID_Utente=Utenti.ID_Utente WHERE Utenti.ID_Utente=".$_SESSION['selectedUser']['ID_Utente'])) {
-                    echo "SELECT Utenti.Cognome,Utenti.Nome,Spese.dataspesa,Spese.importo,Spese.descrizione FROM Spese INNER JOIN Utenti ON Spese.ID_Utente=Utenti.ID_Utente WHERE Utenti.ID_Utenti=".$_SESSION['selectedUser']['ID_Utente'];
-                }
-
-                echo "<H3>Agente :".$_SESSION['selectedUser']['Nome']." ".$_SESSION['selectedUser']['Cognome']."</H3>";   
-
-                echo "<TABLE align='center' class='table table-bordered'>";
-                echo "<TR>";
-
-                for($i=0;$i<$risultato->field_count;$i++)
-                {
-                    echo "<TD><B>".$risultato->fetch_field_direct($i)->name."</B></TD>";
-                }
-                echo "</TR>";
-
-                while ($row=$risultato->fetch_row()) 
-                {
-                    echo "<TR>";
-                    for($i=0;$i<$risultato->field_count;$i++)
-                    {
-
-                        echo "<TD>".$row[$i]."</TD>";
-
-                    }
-                    echo "</TR>";
-                }
-                echo "</TABLE>";
-            ?>
-            <H4>REGISTRAZIONE NUOVA SPESA</H4> 
-            <FORM name='F1' method='post' action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                data spesa:<INPUT type='date' name='SD' size='4' value='' requred>&nbsp;&nbsp;
-                importo:<INPUT type='number' name='SI' size='4' value='' required>&nbsp;&nbsp;
-                descrizione:<INPUT type='text' name='ST' size='8' value=''>&nbsp;&nbsp;
-                <INPUT type='submit' name='SC' value='Nuova spesa'>
-            </FORM>
-            <img src="./images/pagina3.jpg"> <br>
-            <?php
+                echo "<div class='utente'>";
                 echo "Nome: ".$_SESSION['selectedUser']['Nome']."<br>";
                 echo "Cognome: ".$_SESSION['selectedUser']['Cognome']."<br>";
                 echo "Livello: ".$_SESSION['selectedUser']['Livello']."<br>";
+                echo "</div>";
+            
+                $query="SELECT Spese.dataspesa AS 'Data spesa',Spese.importo AS 'Importo spesa(€)',Spese.descrizione AS 'Descrizione spesa' FROM Spese INNER JOIN Utenti ON Spese.ID_Utente=Utenti.ID_Utente WHERE Utenti.ID_Utente=".$_SESSION['selectedUser']['ID_Utente'];
+
+                if (!$risultato = $database->query($query)) {
+                    echo $query;
+                }   
+
+                echo "<table align='center' class='table table-bordered'>";
+                echo "<tr>";
+
+                for($i=0;$i<$risultato->field_count;$i++)
+                {
+                    echo "<td><b>".$risultato->fetch_field_direct($i)->name."</B></TD>";
+                }
+                echo "</tr>";
+
+                while ($row=$risultato->fetch_row()) 
+                {
+                    echo "<tr>";
+                    for($i=0;$i<$risultato->field_count;$i++)
+                    {
+
+                        echo "<td>".$row[$i]."</TD>";
+
+                    }
+                    echo "</tr>";
+                }
+                echo "</table>";
             ?>
+            <h2>Registrazione nuova spesa</h2> 
+            
+            <form align=left name='F1' method='post' action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <div class="mb-3">
+                    <label for="DataSpesa" class="form-label">Data spesa: </label>
+                    <input class="form-control" type='date' id='data' name='DataSpesa' value='' requred>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ImportoSpesa" class="form-label">Importo: </label>
+                    <input class="form-control" type='number' name='ImportoSpesa' value='' required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="DescSpesa" class="form-label">Descrizione: </label>
+                    <textarea class="form-control" name='DescSpesa' value=''></textarea>
+                </div>
+
+                <input class="btn btn-primary" type='submit' name='SC' value='Nuova spesa' >
+            </form>
+            <br>
             <p>Da questa pagina puoi segliere se effettuare il logout e tornare alla pagina di login, andare alla pagina 1, alla pagina 2 oppure alla pagina 4.</p>
             
-            <form action="pagina3.php" method="post">
-                <input type="submit" name="logout" value="Effetua il logout" class="btn btn-primary">
-                <input type="submit" name="GoToP1" value="Vai a Pagina 1" class="btn btn-primary">
-                <input type="submit" name="GoToP2" value="Vai a Pagina 2" class="btn btn-primary">
-                <input type="submit" name="GoToP4" value="Vai alla pagina di gestione degli utenti" class="btn btn-primary">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <input class="btn btn-primary" type="submit" name="logout" value="Effetua il logout">
+                <input class="btn btn-primary" type="submit" name="GoToP1" value="Vai a Pagina 1">
+                <input class="btn btn-primary" type="submit" name="GoToP2" value="Vai a Pagina 2">
+                <input class="btn btn-primary" type="submit" name="GoToP4" value="Vai alla pagina di gestione degli utenti">
             </form>
             <br><br>
         </div>
         <script>
-            function today() {
-                let  today 		= new Date();
-	            let  dd 		= String(today.getDate()).padStart(2, '0');
-	            let  mm 		= String(today.getMonth() + 1).padStart(2, '0'); //janvier = 0
-	            let  yyyy 		= today.getFullYear();
-  
-	            return `${yyyy}-${mm}-${dd}`;
-            }
+            document.getElementById('data').value = new Date().toISOString().substring(0, 10);
         </script>
     </body>
 </html>

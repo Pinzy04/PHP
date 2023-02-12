@@ -1,7 +1,9 @@
 <?php
     session_start();
 
-    $query="";
+    $query="SELECT * 
+            FROM Utenti 
+            WHERE 1";
 
     if (isset($_POST['signIn']))    //se viene cliccato il tasto di login ("Accedi")
     {  
@@ -10,7 +12,7 @@
             echo "non si connette: (".$database -> connect_errno.")".$database -> connect_error; 
         }
 
-        foreach($database -> query("SELECT * FROM Utenti WHERE 1") as $user)    //cerca l'utente con la relativa password
+        foreach($database -> query($query) as $user)    //cerca l'utente con la relativa password
         {
             if (($user['Username'] == $_POST['username']) && (password_verify($_POST['password'], $user['Password']) || ($user['Password'] == $_POST['password']))) //quando viene trovato (password_verify() decripta la password dal database e la confronta con quella inserita)
             {
@@ -34,17 +36,20 @@
     }
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Login </title>
         <link rel='stylesheet' type='text/css' href='style.css'>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <div align="center" class="box">
-            <h2> Benvenuto esegui l'accesso per continuare </h2> <br>
-            <form action="login.php" method="post">
+        <div align=center class="container-fluid">
+            <h1> Benvenuto esegui l'accesso per continuare </h1><br>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <p> Username: <input type="text" name="username" size="40" required></p>
                 <p> Password: <input type="password" name="password" size="40" required></p>
                 <p> 
@@ -55,7 +60,7 @@
                 </p>
                 <p><input type="submit" name="signIn" value="Accedi" class="btn btn-primary"></p>
             </form>
-            <form action="login.php" method="post">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <p><input type="submit" name="guest" value="Accedi come ospite" class="btn btn-primary"></p>
                 <p><input type="submit" name="signUp" value="Registrati" class="btn btn-primary"></p>
             </form>
