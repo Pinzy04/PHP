@@ -5,7 +5,7 @@
             WHERE 1";
     
     if (isset($_POST['signUp'])) {  //se viene cliccato il tasto di signup ("Registrati")   
-        $database=new mysqli("localhost", "root", "", "utenze");  //recupera il database
+        $database=new mysqli("localhost", "root", "", "utenze");  //connessione al database
         $esiste=false;
         foreach($database -> query($query) as $user) {   //cerca un utente con l'username uguale all'username inserito
             if ($user['Username'] == $_POST['username']) {   //se l'username inserito esiste già nel databas
@@ -32,12 +32,19 @@
                                             9 );
                                         ";
                 $database -> query($query);
-                echo "<script language='javascript'> alert('Utente registrato con successo. Esegui l\'accesso alla pagina di login.'); </script>";
-                header("Location: ./login.php");    //torna alla pagina di login
+                
+                echo "<script language='javascript'>
+                        if (window.confirm('Utente registrato con successo. Esegui l\'accesso alla pagina di login.')) {
+                            window.location.href='./login.php'; //torna alla pagina di login
+                        };
+                    </script>";
             } else {
                 echo "<script language='javascript'> alert('Le password devono corrispondere'); </script>";
             }
         }
+    }
+    if (isset($_POST['login'])) {
+        header("Location: ./login.php"); 
     }
 ?>
 
@@ -54,18 +61,33 @@
     <body>
         <div align=center class="container">
             <h1> Registrati al sito </h1><br>
-            <p>Dopo esserti registrato dovrai attendere che l'amministratore verifichi le tue credenziali di accesso.</p>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                <p> Nome: <input type="text" name="name" size="40" required></p>
-                <p> Cognome: <input type="text" name="surname" size="40" required></p>
-                <p> Username: <input type="text" name="username" size="40" required></p>
-                <p> Password: <input type="password" name="password" size="40" pattern="[0-9A-Za-z]{8,30}" title="La password deve essere minimo di 8 caratteri e deve contenere almeno una lettera maiuscola, una minuscola e un numero" required></p>
-                <p> Confirm password: <input type="password" name="cpassword" size="40" pattern="[0-9A-Za-z]{8,30}" title="La password deve essere minimo di 8 caratteri e deve contenere almeno una lettera maiuscola, una minuscola e un numero" required></p>
-                <p><input type="submit" name="signUp" value="Registrati" class="btn btn-primary"></p>
-            </form>
-            <form action="login.php" method="post">
-                <p><input type="submit" name="login" value="Torna al login" class="btn btn-primary"></p>
-            </form>
+            <h4>Dopo esserti registrato dovrai attendere che l'amministratore verifichi le tue credenziali di accesso.</h4>
+            <div class="box">
+                <form align=left action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                    <label for="name" class="form-label"> Nome: </label>
+                    <input type="text" name="name" class="form-control" size="40" required>
+
+                    <label for="surname" class="form-label"> Cognome: </label>
+                    <input type="text" name="surname" class="form-control" size="40" required>
+
+                    <label for="username" class="form-label"> Username: </label>
+                    <input type="text" name="username" class="form-control" size="40" required>
+
+                    <label for="password" class="form-label"> Password: </label>
+                    <input type="password" name="password" class="form-control" size="40" pattern="[0-9A-Za-z]{8,30}" title="La password deve essere minimo di 8 caratteri e deve contenere almeno una lettera maiuscola, una minuscola e un numero" required></p>
+                    
+                    <label for="cpassword" class="form-label"> Confirm password: </label>
+                    <input type="password" name="cpassword" class="form-control" size="40" pattern="[0-9A-Za-z]{8,30}" title="La password deve essere minimo di 8 caratteri e deve contenere almeno una lettera maiuscola, una minuscola e un numero" required></p>
+                    
+                    <div align=center>
+                        <input type="submit" name="signUp" value="Registrati" class="btn btn-dark">
+                    
+                </form>
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                        <br><input type="submit" name="login" value="Torna al login" class="btn btn-dark">
+                    </div>
+                </form>
+            </div>
         </div>
     </body>
 </html>

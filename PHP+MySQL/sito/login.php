@@ -5,17 +5,14 @@
             FROM Utenti 
             WHERE 1";
 
-    if (isset($_POST['signIn']))    //se viene cliccato il tasto di login ("Accedi")
-    {  
-        $database=new mysqli("localhost", "root", "", "utenze");  //recupera il database
+    if (isset($_POST['signIn'])) {  //se viene cliccato il tasto di login ("Accedi")
+        $database=new mysqli("localhost", "root", "", "utenze");  //connessione al database
         if ($database -> connect_errno) {
             echo "non si connette: (".$database -> connect_errno.")".$database -> connect_error; 
         }
 
-        foreach($database -> query($query) as $user)    //cerca l'utente con la relativa password
-        {
-            if (($user['Username'] == $_POST['username']) && (password_verify($_POST['password'], $user['Password']) || ($user['Password'] == $_POST['password']))) //quando viene trovato (password_verify() decripta la password dal database e la confronta con quella inserita)
-            {
+        foreach($database -> query($query) as $user) {   //cerca l'utente con la relativa password
+            if (($user['Username'] == $_POST['username']) && (password_verify($_POST['password'], $user['Password']) || ($user['Password'] == $_POST['password']))) {   //quando viene trovato (password_verify() decripta la password dal database e la confronta con quella inserita)
                 $_SESSION['selectedUser']=$user;  //prende i dati dell'utente dal database e li mette in un array di sessione
                 header("location: ./pagina1.php");  //va alla pagina 1
             }
@@ -24,14 +21,12 @@
         echo "<script type='text/javascript'>alert('Username e/o Password errati');</script>";
     }
 
-    if (isset($_POST['guest']))     //se viene cliccato il tasto di login as guest ("Accedi come ospite")
-    {
+    if (isset($_POST['guest'])) {   //se viene cliccato il tasto di login as guest ("Accedi come ospite")
         $_SESSION['selectedUser']=array('Nome' => 'utente', 'Cognome' => 'ospite', 'Username' => 'utenteospite', 'Password' => null, 'Livello' => 0);
         header("location: ./pagina1.php");  //va alla pagina 1
     }
 
-    if (isset($_POST['signUp']))    //se viene cliccato il tasto di signup ("Registrati")
-    {
+    if (isset($_POST['signUp'])) {  //se viene cliccato il tasto di signup ("Registrati")
         header("location: ./registrazione.php");    //va alla pagina di registrazione
     }
 ?>
@@ -49,21 +44,30 @@
     <body>
         <div align=center class="container">
             <h1> Benvenuto esegui l'accesso per continuare </h1><br>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                <p> Username: <input type="text" name="username" size="40" required></p>
-                <p> Password: <input type="password" name="password" size="40" required></p>
-                <p> 
-                    *Dedicato esclusivamente alla fase di testing* <br>
-                    Per accedere come amministratore usare le seguenti credenziali: <br>
-                    Username -> "admin" <br>
-                    Password -> "admin"
-                </p>
-                <p><input type="submit" name="signIn" value="Accedi" class="btn btn-primary"></p>
-            </form>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                <p><input type="submit" name="guest" value="Accedi come ospite" class="btn btn-primary"></p>
-                <p><input type="submit" name="signUp" value="Registrati" class="btn btn-primary"></p>
-            </form>
+            <div class="box">
+                <form align=left action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                    <label for="username" class="form-label">Username: </label>
+                    <input class="form-control" type="text" name="username" size="40" required>
+
+                    <label for="password" class="form-label">Password: </label>
+                    <input class="form-control" type="password" name="password" size="40" required>
+                    
+                    <p align=center> 
+                        *Dedicato esclusivamente alla fase di testing* <br>
+                        Per accedere come amministratore usare le seguenti credenziali: <br>
+                        Username -> "admin" <br>
+                        Password -> "admin"
+                    </p>
+                    <div align=center>
+                        <input type="submit" name="signIn" value="Accedi" class="btn btn-dark">
+                </form>
+                
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                        <br><input type="submit" name="guest" value="Accedi come ospite" class="btn btn-dark"><br>
+                        <br><input type="submit" name="signUp" value="Registrati" class="btn btn-dark">
+                    </div>
+                </form>
+            </div>
         </div>
     </body>
 </html>

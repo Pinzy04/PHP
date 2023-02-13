@@ -56,7 +56,7 @@ CREATE TABLE `utenti` (
   `Nome` varchar(30) NOT NULL,
   `Cognome` varchar(30) NOT NULL,
   `Username` varchar(30) NOT NULL,
-  `Password` varchar(30) NOT NULL,
+  `Password` varchar(60) NOT NULL,
   `Livello` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    $database=new mysqli("localhost", "root", "", "utenze");  //recupera il database
+    $database=new mysqli("localhost", "root", "", "utenze");  //connessione al database
     if ($database -> connect_errno) {
         echo "non si connette: (".$database -> connect_errno.")".$database -> connect_error;
     }
@@ -36,18 +36,22 @@
         else {
             header('Location: ./acc_neg.php');  //va alla pagina di accesso negato
         }
-    }
-
-   
+    }   
 
     if (isset($_POST['AddSpesa'])) {    //se viene cliccato il tasto di creazione spesa ("Nuova spesa")
-        $query="INSERT INTO Spese (ID_Utente,dataspesa,importo,descrizione) VALUES (".$_SESSION['selectedUser']['ID_Utente'].",'".$_POST['DataSpesa']."',".$_POST['ImportoSpesa'].",'".$_POST['DescSpesa']."')";
+        $query="INSERT INTO Spese ( ID_Utente,
+                                    dataspesa,
+                                    importo,
+                                    descrizione)
+                            VALUES( ".$_SESSION['selectedUser']['ID_Utente'].",
+                                    '".$_POST['DataSpesa']."',
+                                    ".$_POST['ImportoSpesa'].",
+                                    '".$_POST['DescSpesa']."')";
         // esegue la query e produce un recordset
         if (!$risultato = $database->query($query)) {
            echo $query;
         }
-  
-     }	   
+    }	   
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +77,9 @@
                 echo "Livello: ".$_SESSION['selectedUser']['Livello']."<br>";
                 echo "</div><br>";
             
-                $query="SELECT DATE_FORMAT(Spese.dataspesa, '%d/%m/%Y') AS 'Data spesa', Spese.importo AS 'Importo spesa(€)',Spese.descrizione AS 'Descrizione spesa' FROM Spese INNER JOIN Utenti ON Spese.ID_Utente=Utenti.ID_Utente WHERE Utenti.ID_Utente=".$_SESSION['selectedUser']['ID_Utente'];
+                $query="SELECT DATE_FORMAT(Spese.dataspesa, '%d/%m/%Y') AS 'Data spesa', Spese.importo AS 'Importo spesa(€)',Spese.descrizione AS 'Descrizione spesa'
+                        FROM Spese INNER JOIN Utenti ON Spese.ID_Utente=Utenti.ID_Utente
+                        WHERE Utenti.ID_Utente=".$_SESSION['selectedUser']['ID_Utente'];
                 // esegue la query e produce un recordset
                 if (!$risultato = $database->query($query)) {
                     echo $query;
