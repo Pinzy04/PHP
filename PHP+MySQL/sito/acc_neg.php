@@ -26,17 +26,19 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Accesso Negato </title>
-        <link rel='stylesheet' type='text/css' href='style.css'>
+        <link rel='stylesheet' type='text/css' href='./public/style.css'>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <div align=center class="container-fluid">
+        <div align=center class="container">
             <h1> OPS... <br> Non hai i privilegi necessari per accedere a questa pagina! </h1><br>
             <img src="./images/accesso_negato.jpg" class="figure-img img-fluid rounded"> <br>
             <?php
+                echo "<div class='box'>";
                 echo "Nome: ".$_SESSION['selectedUser']['Nome']."<br>";
                 echo "Cognome: ".$_SESSION['selectedUser']['Cognome']."<br>";
                 echo "Livello: ".$_SESSION['selectedUser']['Livello']."<br>";
+                echo "</div><br>";
             ?>
             <p>Da questa pagina puoi segliere se effettuare il logout e tornare alla pagina di login, oppure tornare alla pagina 1.</p>
             <form action="pagina1.php" method="post">

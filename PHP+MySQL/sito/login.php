@@ -43,11 +43,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Login </title>
-        <link rel='stylesheet' type='text/css' href='style.css'>
+        <link rel='stylesheet' type='text/css' href='./public/style.css'>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <div align=center class="container-fluid">
+        <div align=center class="container">
             <h1> Benvenuto esegui l'accesso per continuare </h1><br>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <p> Username: <input type="text" name="username" size="40" required></p>

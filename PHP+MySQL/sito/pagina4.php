@@ -63,26 +63,28 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Admin </title>
-        <link rel='stylesheet' type='text/css' href='style.css'>
+        <title> Amministrazione utenti </title>
+        <link rel='stylesheet' type='text/css' href='./public/style.css'>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <div align=center class="container-fluid">
-            <h1> Benvenuto nella pagina di gestione degli utenti </h1><br>
+        <div align=center class="container">
+            <h1> Benvenuto nella pagina di amministrazione degli utenti </h1><br>
             <img src="./images/pagina4.jpg" class="figure-img img-fluid rounded"> <br>
             <?php
+                echo "<div class='box'>";
                 echo "Nome: ".$_SESSION['selectedUser']['Nome']."<br>";
                 echo "Cognome: ".$_SESSION['selectedUser']['Cognome']."<br>";
                 echo "Livello: ".$_SESSION['selectedUser']['Livello']."<br>";
-
+                echo "</div><br>";
                 // esegue la query e produce un recordset
                 if (!$risultato=$database -> query("SELECT Utenti.Nome,Utenti.Cognome,Utenti.Username,Utenti.Livello FROM Utenti WHERE 1")) {
                     echo "SELECT * FROM Utenti WHERE 1";
                 }
 
                 //crea la tabella con i dati del database
-                echo "<table align='center' class='table table-bordered'>";
+                echo "<div class='table-responsive'>";
+                echo "<table align='center' border=3 class='table table-sm table-bordered border-dark'>";
                 echo "<thead>";
                 for($i=0; $i < $risultato -> field_count; $i++) {
                     echo "<td><b>".$risultato -> fetch_field_direct($i) -> name."</b></td>";
@@ -96,46 +98,48 @@
                     echo "</tr>";
                 }
                 echo "</table>";
+                echo "</div>";
             ?>
+            <div class="box" style="background-color: coral;">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                    <p> Per modificare il livello di accesso di un utente selezionare l'username e il livello nei campi sottostanti. </p>
+                    <label for="useredit"> Username: </label>
+                    <select name="useredit">
+                        <option value=-1> Seleziona utente</option>
+                        <?php
+                            foreach($database -> query("SELECT * FROM Utenti WHERE 1") as $user)
+                            {
+                                echo "<option value=".$user['ID_Utente'].">".$user['Username']."</option>";
+                            }
+                        ?>
+                    </select>
 
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                <p> Per modificare il livello di accesso di un utente selezionare l'username e il livello nei campi sottostanti. </p>
-                <label for="useredit"> Username: </label>
-                <select name="useredit">
-                    <option value=-1> Seleziona utente</option>
-                    <?php
-                        foreach($database -> query("SELECT * FROM Utenti WHERE 1") as $user)
-                        {
-                            echo "<option value=".$user['ID_Utente'].">".$user['Username']."</option>";
-                        }
-                    ?>
-                </select>
+                    <label for="level"> livello </label>
+                    <select name="level">
+                        <option value=-1> Scegli il livello</option>
+                        <option value=1> agente </option>
+                        <option value=2> amministratore </option>
+                    </select>
+                    <br><br>
+                    <input type="submit" name="edit" value="Modifica" class="btn btn-primary">
 
-                <label for="level"> livello </label>
-                <select name="level">
-                    <option value=-1> Scegli il livello</option>
-                    <option value=1> agente </option>
-                    <option value=2> amministratore </option>
-                </select>
-                <br><br>
-                <input type="submit" name="edit" value="Modifica" class="btn btn-primary">
-
-                <p> Per elimiare un utente selezionare l'username nel campo sottostante. </p>
-                <label for="userdelete"> Username: </label>
-                <select name="userdelete">
-                    <option value=-1> Seleziona utente</option>
-                    <?php
-                        foreach($database -> query("SELECT * FROM Utenti WHERE 1") as $user)
-                        {
-                            echo "<option value=".$user['ID_Utente'].">".$user['Username']."</option>";
-                        }
-                    ?>
-                </select>
-                <br><br>
-                <input type="submit" name="delete" value="Elimina" class="btn btn-primary">
-            </form>
+                    <p> Per elimiare un utente selezionare l'username nel campo sottostante. </p>
+                    <label for="userdelete"> Username: </label>
+                    <select name="userdelete">
+                        <option value=-1> Seleziona utente</option>
+                        <?php
+                            foreach($database -> query("SELECT * FROM Utenti WHERE 1") as $user)
+                            {
+                                echo "<option value=".$user['ID_Utente'].">".$user['Username']."</option>";
+                            }
+                        ?>
+                    </select>
+                    <br><br>
+                    <input type="submit" name="delete" value="Elimina" class="btn btn-primary">
+                </form>
+            </div>
             <br>
-            <p>Da questa pagina puoi segliere se effettuare il logout e tornare alla pagina di login, andare alla pagina 1, alla pagina 2 oppure alla pagina 4.</p>
+            <p>Da questa pagina puoi segliere se effettuare il logout e tornare alla pagina di login, andare alla pagina 1, alla pagina 2 oppure alla pagina di gestione delle spese degli agenti.</p>
             
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <input type="submit" name="logout" value="Effetua il logout" class="btn btn-primary">
