@@ -19,6 +19,7 @@
         }
         // se il ciclo finisce l'utente è inesistente o la password è errata
         echo "<script type='text/javascript'>alert('Username e/o Password errati');</script>";
+        unset($_POST['signIn']);
     }
 
     if (isset($_POST['guest'])) {   //se viene cliccato il tasto di login as guest ("Accedi come ospite")
