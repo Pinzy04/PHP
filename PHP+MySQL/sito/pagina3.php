@@ -36,7 +36,15 @@
         else {
             header('Location: ./acc_neg.php');  //va alla pagina di accesso negato
         }
-    }   
+    }
+
+    if (isset($_POST['delete']))    //se viene cliccato il tasto di delete ("Elimina")
+    {
+        if($_POST['deletespesa'] != -1) {    //controlla che la spesa sia inserita
+            $id_spesa=$_POST['deletespesa'];
+            $database -> query("DELETE FROM utenti WHERE ID_Spese='$id_spesa';");   //delete, viene effettuata l'eliminazione della spesa
+        }
+    }
 
     if (isset($_POST['AddSpesa'])) {    //se viene cliccato il tasto di creazione spesa ("Nuova spesa")
         $query="INSERT INTO Spese ( ID_Utente,
@@ -51,6 +59,8 @@
         if (!$risultato = $database->query($query)) {
            echo $query;
         }
+
+        unset($_POST['AddSpesa']);
     }	   
 ?>
 
@@ -77,9 +87,10 @@
                 echo "Livello: ".$_SESSION['selectedUser']['Livello']."<br>";
                 echo "</div><br>";
             
-                $query="SELECT DATE_FORMAT(Spese.dataspesa, '%d/%m/%Y') AS 'Data spesa', Spese.importo AS 'Importo spesa(€)',Spese.descrizione AS 'Descrizione spesa'
+                $query="SELECT Spese.ID_Spese AS 'Codice', DATE_FORMAT(Spese.dataspesa, '%d/%m/%Y') AS 'Data spesa', Spese.importo AS 'Importo spesa(€)',Spese.descrizione AS 'Descrizione spesa'
                         FROM Spese INNER JOIN Utenti ON Spese.ID_Utente=Utenti.ID_Utente
-                        WHERE Utenti.ID_Utente=".$_SESSION['selectedUser']['ID_Utente'];
+                        WHERE Utenti.ID_Utente=".$_SESSION['selectedUser']['ID_Utente']."
+                        ORDER BY Spese.dataspesa DESC";
                 // esegue la query e produce un recordset
                 if (!$risultato = $database->query($query)) {
                     echo $query;
@@ -117,21 +128,37 @@
 
                     <div class="mb-3">
                         <label for="ImportoSpesa" class="form-label">Importo: </label>
-                        <input class="form-control" type='number' name='ImportoSpesa' value='' required>
+                        <input class="form-control" type='number' name='ImportoSpesa' max=9999.99 min=0.01 step=0.01 value='' required>
                     </div>
                     
                     <div class="mb-3">
                         <label for="DescSpesa" class="form-label">Descrizione: </label>
                         <textarea class="form-control" name='DescSpesa' value=''></textarea>
                     </div>
-
-                    <input class="btn btn-dark" type='submit' name='AddSpesa' value='Nuova spesa' >
+                    <div style="float:left;">
+                        <input class="btn btn-dark" align=left type='submit' name='AddSpesa' value='Nuova spesa' >
+                    </div>
+                </form>
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
+                    <div style="float:right">
+                        <label for="deletespesa"> Elimina spesa numero: </label>
+                        <select name="deletespesa">
+                            <option value=-1> Seleziona spesa</option>
+                            <?php
+                                foreach($database -> query("SELECT * FROM Spese WHERE 1") as $expense) {
+                                    echo "<option value=".$expense['ID_Spese']."> ".$expense['ID_Spese']." </option>";
+                                }
+                            ?>
+                        </select>
+                        <input type="submit" name="delete" value="Elimina" class="btn btn-dark">
+                    </div>
+                    <div style="clear:both"></div>
                 </form>
             </div>
             <br>
             <p>Da questa pagina puoi segliere se effettuare il logout e tornare alla pagina di login, andare alla pagina 1, alla pagina 2 oppure alla pagina di amministrazione degli utenti.</p>
             
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
                 <input class="btn btn-primary" type="submit" name="logout" value="Effetua il logout">
                 <input class="btn btn-primary" type="submit" name="GoToP1" value="Vai a Pagina 1">
                 <input class="btn btn-primary" type="submit" name="GoToP2" value="Vai a Pagina 2">
