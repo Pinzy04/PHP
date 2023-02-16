@@ -27,6 +27,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
+        <?php
+            include('header.php');
+        ?>   
         <div align=center class="container">
             <h1> OPS... <br> Non hai i privilegi necessari per accedere a questa pagina! </h1><br>
             <img src="./images/accesso_negato.jpg" class="figure-img img-fluid rounded"> <br>
@@ -37,12 +40,6 @@
                 echo "Livello: ".$_SESSION['selectedUser']['Livello']."<br>";
                 echo "</div><br>";
             ?>
-            <p>Da questa pagina puoi segliere se effettuare il logout e tornare alla pagina di login, oppure tornare alla pagina 1.</p>
-            <form action="pagina1.php" method="post">
-                <input type="submit" name="logout" value="Effetua il logout" class="btn btn-primary">
-                <input type="submit" name="GoToP1" value="Vai a Pagina 1" class="btn btn-primary">
-            </form>
-            <br><br>
         </div>
     </body>
 </html>

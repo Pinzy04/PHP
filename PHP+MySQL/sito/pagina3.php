@@ -11,7 +11,7 @@
         header('Location: ./login.php');    //torna alla pagina di login
     }
 
-    if(!$_SESSION['selectedUser']['Livello'] >= 1 and $_SESSION['selectedUser']['Livello'] != 9) {  //controlla se l'utente ha il livello necessario per accedere alla pagina
+    if(!$_SESSION['selectedUser']['Livello'] >= 1 or $_SESSION['selectedUser']['Livello'] == 9) {  //controlla se l'utente ha il livello necessario per accedere alla pagina
         header('Location: ./acc_neg.php');  //va alla pagina di accesso negato
     }
 
@@ -38,11 +38,10 @@
         }
     }
 
-    if (isset($_POST['delete']))    //se viene cliccato il tasto di delete ("Elimina")
-    {
+    if (isset($_POST['delete'])) {  //se viene cliccato il tasto di delete ("Elimina")
         if($_POST['deletespesa'] != -1) {    //controlla che la spesa sia inserita
             $id_spesa=$_POST['deletespesa'];
-            $database -> query("DELETE FROM utenti WHERE ID_Spese='$id_spesa';");   //delete, viene effettuata l'eliminazione della spesa
+            $database -> query("DELETE FROM Spese WHERE ID_Spese='$id_spesa';");   //delete, viene effettuata l'eliminazione della spesa
         }
     }
 
@@ -77,7 +76,12 @@
         <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     </head>
     <body>
-        <div align=center class="container">
+        <?php
+            $_GET['current']=3;
+            include('header.php');
+        ?>
+        <div align=center class="container" style="text-align: center;">
+            
             <h1> Benvenuto nella pagina di gestione delle spese degli agenti</h1><br>
             <img src="./images/pagina3.jpg" class="figure-img img-fluid rounded"> <br>
             <?php
@@ -88,30 +92,28 @@
                 echo "</div><br>";
             
                 $query="SELECT Spese.ID_Spese AS 'Codice', DATE_FORMAT(Spese.dataspesa, '%d/%m/%Y') AS 'Data spesa', Spese.importo AS 'Importo spesa(€)',Spese.descrizione AS 'Descrizione spesa'
-                        FROM Spese INNER JOIN Utenti ON Spese.ID_Utente=Utenti.ID_Utente
-                        WHERE Utenti.ID_Utente=".$_SESSION['selectedUser']['ID_Utente']."
-                        ORDER BY Spese.dataspesa DESC";
-                // esegue la query e produce un recordset
-                if (!$risultato = $database->query($query)) {
+                        FROM Spese
+                        WHERE Spese.ID_Utente=".$_SESSION['selectedUser']['ID_Utente']."
+                        ORDER BY Spese.dataspesa DESC;";
+                
+                if (!$risultato = $database->query($query)) {   // esegue la query e produce un recordset
                     echo $query;
                 }   
 
                 //crea la tabella con i dati del database
                 echo "<div class='table-responsive'>";
                 echo "<table align='center' border=3 class='table table-sm table-bordered border-dark'>";
-                echo "<tr>";
+                echo "<thead>";
 
                 for($i=0;$i<$risultato->field_count;$i++) {
                     echo "<td><b>".$risultato->fetch_field_direct($i)->name."</B></TD>";
                 }
-                echo "</tr>";
+                echo "</thead>";
 
                 while ($row=$risultato->fetch_row()) {
                     echo "<tr>";
                     for($i=0;$i<$risultato->field_count;$i++) {
-
                         echo "<td>".$row[$i]."</TD>";
-
                     }
                     echo "</tr>";
                 }
@@ -119,7 +121,7 @@
                 echo "</div>";
             ?>
             <h2>Registrazione nuova spesa</h2> 
-            <div class="box" style="background-color: coral;">
+            <div class="box">
                 <form align=left name='F1' method='post' action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <div class="mb-3">
                         <label for="DataSpesa" class="form-label">Data spesa: </label>
@@ -136,35 +138,35 @@
                         <textarea class="form-control" name='DescSpesa' value=''></textarea>
                     </div>
                     <div style="float:left;">
-                        <input class="btn btn-dark" align=left type='submit' name='AddSpesa' value='Nuova spesa' >
+                        <input align=left type='submit' name='AddSpesa' value='Nuova spesa' class="btn btn-outline-primary me-2">
                     </div>
                 </form>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
-                    <div style="float:right">
+                    <div style="float:none">
                         <label for="deletespesa"> Elimina spesa numero: </label>
                         <select name="deletespesa">
-                            <option value=-1> Seleziona spesa</option>
+                            <option value=-1> Seleziona il codice della spesa</option>
                             <?php
-                                foreach($database -> query("SELECT * FROM Spese WHERE 1") as $expense) {
+                                $query="SELECT *
+                                        FROM Spese
+                                        WHERE Spese.ID_Utente=".$_SESSION['selectedUser']['ID_Utente'].";";
+
+                                foreach($database -> query($query) as $expense) {   // esegue la query e produce un recordset
                                     echo "<option value=".$expense['ID_Spese']."> ".$expense['ID_Spese']." </option>";
                                 }
                             ?>
                         </select>
-                        <input type="submit" name="delete" value="Elimina" class="btn btn-dark">
+                        <input type="submit" name="delete" value="Elimina" class="btn btn-outline-danger me-2">
                     </div>
                     <div style="clear:both"></div>
                 </form>
             </div>
             <br>
-            <p>Da questa pagina puoi segliere se effettuare il logout e tornare alla pagina di login, andare alla pagina 1, alla pagina 2 oppure alla pagina di amministrazione degli utenti.</p>
-            
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
-                <input class="btn btn-primary" type="submit" name="logout" value="Effetua il logout">
-                <input class="btn btn-primary" type="submit" name="GoToP1" value="Vai a Pagina 1">
-                <input class="btn btn-primary" type="submit" name="GoToP2" value="Vai a Pagina 2">
-                <input class="btn btn-primary" type="submit" name="GoToP4" value="Vai alla pagina di amministrazione degli utenti">
-            </form>
-            <br><br>
+            <?php
+                $_GET['previous']="./pagina2.php";
+                $_GET['next']="./pagina4.php";
+                include('footer.php');
+            ?>
         </div>
     </body>
     <script>

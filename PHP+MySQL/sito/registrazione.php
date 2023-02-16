@@ -8,8 +8,8 @@
         $database=new mysqli("localhost", "root", "", "utenze");  //connessione al database
         $esiste=false;
         foreach($database -> query($query) as $user) {   //cerca un utente con l'username uguale all'username inserito
-            if ($user['Username'] == $_POST['username']) {   //se l'username inserito esiste già nel databas
-                echo "<script language='javascript'> alert('Username già utilizzato da un altro utente.'); </script>";
+            if ($user['Username'] == $_POST['username']) {   //se l'username inserito esiste già nel database
+                echo "<script language='javascript'>alert('Username già utilizzato da un altro utente!');window.location.href='registrazione.php';</script>";
                 $esiste=true;
                 break;
             }
@@ -33,13 +33,9 @@
                                         ";
                 $database -> query($query);
                 
-                echo "<script language='javascript'>
-                        if (window.confirm('Utente registrato con successo. Esegui l\'accesso alla pagina di login.')) {
-                            window.location.href='./login.php'; //torna alla pagina di login
-                        };
-                    </script>";
+                echo "<script language='javascript'>alert('Utente registrato con successo! Esegui l\'accesso alla pagina di login.');window.location.href='login.php';</script>";
             } else {
-                echo "<script language='javascript'> alert('Le password devono corrispondere'); </script>";
+                echo "<script language='javascript'>alert('Le password devono corrispondere!');window.location.href='registrazione.php';</script>";
             }
         }
     }
@@ -80,11 +76,11 @@
                     <input type="password" name="cpassword" class="form-control" size="40" pattern="[0-9A-Za-z]{8,30}" title="La password deve essere minimo di 8 caratteri e deve contenere almeno una lettera maiuscola, una minuscola e un numero" required></p>
                     
                     <div align=center>
-                        <input type="submit" name="signUp" value="Registrati" class="btn btn-dark">
+                        <input type="submit" name="signUp" value="Registrati" class="btn btn-outline-success me-2">
                     
                 </form>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                        <br><input type="submit" name="login" value="Torna al login" class="btn btn-dark">
+                        <br><input type="submit" name="login" value="Torna al login" class="btn btn-outline-danger me-2">
                     </div>
                 </form>
             </div>

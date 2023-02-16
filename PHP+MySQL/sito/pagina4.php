@@ -10,7 +10,7 @@
         header('Location: ./login.php');    //torna alla pagina di login
     }
 
-    if(!$_SESSION['selectedUser']['Livello'] >= 2 and $_SESSION['selectedUser']['Livello'] != 9) {  //controlla se l'utente ha il livello necessario per accedere alla pagina
+    if(!$_SESSION['selectedUser']['Livello'] >= 2 or $_SESSION['selectedUser']['Livello'] == 9) {  //controlla se l'utente ha il livello necessario per accedere alla pagina
         header('Location: ./acc_neg.php');  //va alla pagina di accesso negato
     }
 
@@ -39,8 +39,7 @@
         }
     }
 
-    if (isset($_POST['delete']))    //se viene cliccato il tasto di delete ("Elimina")
-    {
+    if (isset($_POST['delete'])) {  //se viene cliccato il tasto di delete ("Elimina")
         if($_POST['userdelete'] != -1) {    //controlla che l'utente sia inserito
             $id_utente=$_POST['userdelete'];
             $database -> query("DELETE FROM utenti WHERE ID_Utente='$id_utente';");   //delete, viene effettuata l'eliminazione dell'utente
@@ -59,7 +58,12 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <div align=center class="container">
+        <?php
+            $_GET['current']=4;
+            include('header.php');
+        ?>
+        <div align=center class="container" style="text-align: center;">
+            
             <h1> Benvenuto nella pagina di amministrazione degli utenti </h1><br>
             <img src="./images/pagina4.jpg" class="figure-img img-fluid rounded"> <br>
             <?php
@@ -79,7 +83,7 @@
 
                 //crea la tabella con i dati del database
                 echo "<div class='table-responsive'>";
-                echo "<table align='center' border=3 class='table table-sm table-bordered border-dark'>";
+                echo "<table align='center' class='table table-sm table-bordered border-dark'>";
                 echo "<thead>";
                 for($i=0; $i < $risultato -> field_count; $i++) {
                     echo "<td><b>".$risultato -> fetch_field_direct($i) -> name."</b></td>";
@@ -95,7 +99,7 @@
                 echo "</table>";
                 echo "</div>";
             ?>
-            <div class="box" style="background-color: coral;">
+            <div class="box">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <p> Per modificare il livello di accesso di un utente selezionare l'username e il livello nei campi sottostanti. </p>
                     <label for="useredit"> Username: </label>
@@ -115,33 +119,28 @@
                         <option value=2> amministratore </option>
                     </select>
                     <br><br>
-                    <input type="submit" name="edit" value="Modifica" class="btn btn-primary">
+                    <input type="submit" name="edit" value="Modifica" class="btn btn-outline-info me-2">
 
                     <p> Per elimiare un utente selezionare l'username nel campo sottostante. </p>
                     <label for="userdelete"> Username: </label>
                     <select name="userdelete">
                         <option value=-1> Seleziona utente</option>
                         <?php
-                            foreach($database -> query("SELECT * FROM Utenti WHERE 1") as $user)
-                            {
+                            foreach($database -> query("SELECT * FROM Utenti WHERE 1") as $user) {                            
                                 echo "<option value=".$user['ID_Utente'].">".$user['Username']."</option>";
                             }
                         ?>
                     </select>
                     <br><br>
-                    <input type="submit" name="delete" value="Elimina" class="btn btn-primary">
+                    <input type="submit" name="delete" value="Elimina" class="btn btn-outline-danger me-2">
                 </form>
             </div>
             <br>
-            <p>Da questa pagina puoi segliere se effettuare il logout e tornare alla pagina di login, andare alla pagina 1, alla pagina 2 oppure alla pagina di gestione delle spese degli agenti.</p>
-            
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                <input type="submit" name="logout" value="Effetua il logout" class="btn btn-primary">
-                <input type="submit" name="GoToP1" value="Vai a Pagina 1" class="btn btn-primary">
-                <input type="submit" name="GoToP2" value="Vai a Pagina 2" class="btn btn-primary">
-                <input type="submit" name="GoToP3" value="Vai alla pagina di gestione delle spese degli agenti" class="btn btn-primary">
-            </form>
-            <br><br>
+            <?php
+                $_GET['previous']="./pagina3.php";
+                $_GET['next']=null;
+                include('footer.php');
+            ?>
         </div>
     </body>
 </html>

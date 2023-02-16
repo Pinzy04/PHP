@@ -27,25 +27,29 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
+        <?php
+            $_GET['current']=1;
+            include('header.php');
+        ?>
         <div align=center class="container">
             <h1> Benvenuto nella pagina 1 </h1><br>
             <img src="./images/pagina1.jpg" class="figure-img img-fluid rounded"> <br>
+            <div class='box'>
+                <?php
+                    echo "Nome: ".$_SESSION['selectedUser']['Nome']."<br>";
+                    echo "Cognome: ".$_SESSION['selectedUser']['Cognome']."<br>";
+                    echo "Livello: ".$_SESSION['selectedUser']['Livello']."<br>";
+                    if ($_SESSION['selectedUser']['Livello'] == 9) {    //se l'utente non è stato ancora verificato
+                        echo "La tua utenza è in fase di verifica, in questo momento sei al pari di un utente ospite. <br><br>";
+                    }
+                ?>
+            </div>
+            <br>
             <?php
-                echo "<div class='box'>";
-                echo "Nome: ".$_SESSION['selectedUser']['Nome']."<br>";
-                echo "Cognome: ".$_SESSION['selectedUser']['Cognome']."<br>";
-                echo "Livello: ".$_SESSION['selectedUser']['Livello']."<br>";
-                if ($_SESSION['selectedUser']['Livello'] == 9) {    //se l'utente non è stato ancora verificato
-                    echo "La tua utenza è in fase di verifica, in questo momento sei al pari di un utente ospite. <br><br>";
-                }
-                echo "</div><br>";
+                $_GET['previous']=null;
+                $_GET['next']="./pagina2.php";
+                include('footer.php');
             ?>
-            <p>Da questa pagina puoi segliere se effettuare il logout e tornare alla pagina di login, oppure andare alla pagina 2.</p>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                <input type="submit" name="logout" value="Effetua il logout" class="btn btn-primary">
-                <input type="submit" name="GoToP2" value="Vai a Pagina 2" class="btn btn-primary">
-            </form>
-            <br><br>
         </div>
     </body>
 </html>

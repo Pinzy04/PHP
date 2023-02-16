@@ -4,6 +4,12 @@
     $query="SELECT * 
             FROM Utenti 
             WHERE 1";
+            
+    if (isset($_SESSION['selectedUser'])) {    //se l'utente non è loggato
+        session_destroy();
+        header('Location: ./login.php');    //torna alla pagina di login
+        exit();
+    }
 
     if (isset($_POST['signIn'])) {  //se viene cliccato il tasto di login ("Accedi")
         $database=new mysqli("localhost", "root", "", "utenze");  //connessione al database
@@ -18,8 +24,7 @@
             }
         }
         // se il ciclo finisce l'utente è inesistente o la password è errata
-        echo "<script type='text/javascript'>alert('Username e/o Password errati');</script>";
-        unset($_POST['signIn']);
+        echo "<script language='javascript'>alert('Username e/o Password errati!');window.location.href='login.php';</script>";
     }
 
     if (isset($_POST['guest'])) {   //se viene cliccato il tasto di login as guest ("Accedi come ospite")
@@ -43,6 +48,10 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
+        <?php
+            $_GET['current']=-1;
+            include('header.php');
+        ?>   
         <div align=center class="container">
             <h1> Benvenuto esegui l'accesso per continuare </h1><br>
             <div class="box">
@@ -60,12 +69,11 @@
                         Password -> "admin"
                     </p>
                     <div align=center>
-                        <input type="submit" name="signIn" value="Accedi" class="btn btn-dark">
+                        <input type="submit" name="signIn" value="Accedi" class="btn btn-outline-light me-2">
                 </form>
                 
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                        <br><input type="submit" name="guest" value="Accedi come ospite" class="btn btn-dark"><br>
-                        <br><input type="submit" name="signUp" value="Registrati" class="btn btn-dark">
+                        <br>
                     </div>
                 </form>
             </div>
