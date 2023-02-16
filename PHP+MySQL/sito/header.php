@@ -30,7 +30,7 @@
         ?>
           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <div class="text-end">
-              <input type="submit" class="btn btn-outline-light me-2" name="logout" value="Logout">
+              <input type="submit" class="btn btn-outline-danger me-2" name="logout" value="Logout">
             </div>
           </form>
         <?php  
