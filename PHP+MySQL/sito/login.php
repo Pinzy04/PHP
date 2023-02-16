@@ -57,10 +57,10 @@
             <div class="box">
                 <form align=left action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <label for="username" class="form-label">Username: </label>
-                    <input class="form-control" type="text" name="username" size="40" required>
+                    <input class="form-control" type="text" name="username" size="40" placeholder="Inserisci il nome utente" required>
 
                     <label for="password" class="form-label">Password: </label>
-                    <input class="form-control" type="password" name="password" size="40" required>
+                    <input class="form-control" type="password" name="password" size="40" placeholder="Inserisci la password" required>
                     
                     <p align=center> 
                         *Dedicato esclusivamente alla fase di testing* <br>

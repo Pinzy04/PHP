@@ -130,12 +130,12 @@
 
                     <div class="mb-3">
                         <label for="ImportoSpesa" class="form-label">Importo: </label>
-                        <input class="form-control" type='number' name='ImportoSpesa' max=9999.99 min=0.01 step=0.01 value='' required>
+                        <input class="form-control" type='number' name='ImportoSpesa' max=9999.99 min=0.01 step=0.01 placeholder="Inserisci l'importo" required>
                     </div>
                     
                     <div class="mb-3">
                         <label for="DescSpesa" class="form-label">Descrizione: </label>
-                        <textarea class="form-control" name='DescSpesa' value=''></textarea>
+                        <textarea class="form-control" name='DescSpesa' placeholder="Inserisci una descrizione per l'importo indicato(facoltativo)"></textarea>
                     </div>
                     <div style="float:left;">
                         <input align=left type='submit' name='AddSpesa' value='Nuova spesa' class="btn btn-outline-primary me-2">

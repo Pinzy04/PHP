@@ -22,7 +22,7 @@
                   echo "<input type='submit' name='guest' value='Accedi come ospite' class='btn btn-outline-success me-2'>";
                 }
               ?>
-              <input type="submit" class="btn btn-outline-warning me-2" name="signUp" value="Sign-up">
+              <input type="submit" class="btn btn-outline-warning me-2" name="signUp" value="Registrati">
             </div>
           </form>
         <?php

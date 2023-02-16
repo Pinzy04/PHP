@@ -61,19 +61,19 @@
             <div class="box">
                 <form align=left action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <label for="name" class="form-label"> Nome: </label>
-                    <input type="text" name="name" class="form-control" size="40" required>
+                    <input type="text" name="name" class="form-control" size="40" placeholder="Inserisci il tuo nome" required>
 
                     <label for="surname" class="form-label"> Cognome: </label>
-                    <input type="text" name="surname" class="form-control" size="40" required>
+                    <input type="text" name="surname" class="form-control" size="40" placeholder="Inserisci il tuo cognome" required>
 
                     <label for="username" class="form-label"> Username: </label>
-                    <input type="text" name="username" class="form-control" size="40" required>
+                    <input type="text" name="username" class="form-control" size="40" placeholder="Inserisci il tuo nome utente" required>
 
                     <label for="password" class="form-label"> Password: </label>
-                    <input type="password" name="password" class="form-control" size="40" pattern="[0-9A-Za-z]{8,30}" title="La password deve essere minimo di 8 caratteri e deve contenere almeno una lettera maiuscola, una minuscola e un numero" required></p>
+                    <input type="password" name="password" class="form-control" size="40" placeholder="Crea una password" pattern="[0-9A-Za-z]{8,30}" title="La password deve essere minimo di 8 caratteri e deve contenere almeno una lettera maiuscola, una minuscola e un numero" required></p>
                     
-                    <label for="cpassword" class="form-label"> Confirm password: </label>
-                    <input type="password" name="cpassword" class="form-control" size="40" pattern="[0-9A-Za-z]{8,30}" title="La password deve essere minimo di 8 caratteri e deve contenere almeno una lettera maiuscola, una minuscola e un numero" required></p>
+                    <label for="cpassword" class="form-label"> Conferma password: </label>
+                    <input type="password" name="cpassword" class="form-control" size="40" placeholder="Ripeti la password" pattern="[0-9A-Za-z]{8,30}" title="La password deve essere minimo di 8 caratteri e deve contenere almeno una lettera maiuscola, una minuscola e un numero" required></p>
                     
                     <div align=center>
                         <input type="submit" name="signUp" value="Registrati" class="btn btn-outline-success me-2">
