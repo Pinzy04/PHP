@@ -1,0 +1,39 @@
+.box {
+    text-align: center;
+    font-size: 20px;
+    margin: auto;
+    padding: 10px;
+    border: 1px solid whitesmoke;
+    border-radius: 10px;
+    background-color: #30363d;
+}
+
+table {
+    background-color: black;
+    border: 3px solid;
+}
+
+h1,h2,.box {
+    color: white;
+}
+
+body {
+    background-color: #0d1117 !important;
+}
+
+#pagination-colors {
+    --bs-pagination-hover-bg: darkgray !important;
+    --bs-pagination-hover-border-color: darkgray !important;
+    --bs-pagination-focus-bg: darkgray !important;
+
+    --bs-pagination-disabled-border-color: white !important;
+    --bs-pagination-border-color: white !important;
+    --bs-pagination-active-border-color: white !important;
+
+    --bs-pagination-color: black !important;
+    --bs-pagination-active-bg: var(--bs-dark) !important;
+
+    
+    --bs-pagination-hover-color: black !important;
+    --bs-pagination-focus-color: black !important;
+}
