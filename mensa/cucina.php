@@ -9,6 +9,22 @@ if ($mysqli->connect_errno) {
     exit;
 }
 
+//gestione livelli di accesso
+if (!isset($_SESSION['selectedUser'])) {    //se l'utente non è loggato
+    
+    header('Location: ./login.php');    //torna alla pagina di login
+}
+
+if(!$_SESSION['selectedUser']['Livello'] == 2 or $_SESSION['selectedUser']['Livello'] == 9) {  //controlla se l'utente ha il livello necessario per accedere alla pagina
+    header('Location: ./acc_neg.php');  //va alla pagina di accesso negato
+}
+
+if (isset($_POST['logout'])) {  //se viene cliccato il tasto di logout ("Effetua il logout")
+    session_destroy();
+    header('Location: ./login.php');    //torna alla pagina di login
+    exit;
+}
+
 // preparazione del piatto
 if (isset($_POST['submit'])) {
     $piatto = $_POST['piatto'];
