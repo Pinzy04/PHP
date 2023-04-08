@@ -20,6 +20,11 @@ if ($mysqli->connect_errno) {
     exit;
 }
 
+//gestione livelli di accesso
+if (!isset($_SESSION['selectedUser'])) {    //se l'utente non è loggato   
+    header('Location: ./login.php');    //vai alla pagina di login
+}
+
 // aggiunge piatto all'ordine
 if (isset($_GET['piatto']) && !$limite_raggiunto) {
     $piatto = $_GET['piatto'];  // il piatto scelto
@@ -97,13 +102,15 @@ if (!$risultato = $mysqli->query($query)) exit;
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
         <title>Mensa</title>
     </head>
 
     <body>
-
+        <?php
+            include('header.php');
+        ?>  
         <div class="d-flex align-items-center flex-column" style="height: 200px;">
 
 

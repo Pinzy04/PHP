@@ -5,33 +5,29 @@
             WHERE 1";
     
     if (isset($_POST['signUp'])) {  //se viene cliccato il tasto di signup ("Registrati")   
-        $database=new mysqli("localhost", "root", "", "utenze");  //connessione al database
+        $mysqli=new mysqli("localhost", "root", "", "mensa");  //connessione al database
         $esiste=false;
-        foreach($database -> query($query) as $user) {   //cerca un utente con l'username uguale all'username inserito
-            if ($user['Username'] == $_POST['username']) {   //se l'username inserito esiste già nel database
+        foreach($mysqli -> query($query) as $user) {   //cerca un utente con l'username uguale all'username inserito
+            if ($user['username'] == $_POST['username']) {   //se l'username inserito esiste già nel database
                 echo "<script language='javascript'>alert('Username già utilizzato da un altro utente!');window.location.href='registrazione.php';</script>";
                 $esiste=true;
                 break;
             }
         }
         if (!$esiste) { //se l'username inserito non esiste già nel database
-            
             if ($_POST['password'] == $_POST['cpassword']) {    //se le password non corrispondono
                 //inserisce i dati inseriti nel database e torna alla pagina di login
                 
-                $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]);   //criptazione password
-                $query="INSERT INTO utenti( `Nome`, 
-                                            `Cognome`, 
-                                            `Username`, 
-                                            `Password`, 
-                                            `Livello`) 
+                $query="INSERT INTO utenti( `nome`, 
+                                            `username`, 
+                                            `psw`, 
+                                            `livello`) 
                                     VALUES( '".$_POST['name']."', 
-                                            '".$_POST['surname']."', 
                                             '".$_POST['username']."', 
-                                            '".$hashedPassword."', 
-                                            9 );
+                                            PASSWORD('".$_POST['password']."'), 
+                                            1 );
                                         ";
-                $database -> query($query);
+                $mysqli -> query($query);
                 
                 echo "<script language='javascript'>alert('Utente registrato con successo! Esegui l\'accesso alla pagina di login.');window.location.href='login.php';</script>";
             } else {
@@ -52,7 +48,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Registrazione </title>
         <link rel='stylesheet' type='text/css' href='./public/style.css'>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
         <div align=center class="container">
@@ -62,9 +58,6 @@
                 <form align=left action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <label for="name" class="form-label"> Nome: </label>
                     <input type="text" name="name" class="form-control" size="40" placeholder="Inserisci il tuo nome" required>
-
-                    <label for="surname" class="form-label"> Cognome: </label>
-                    <input type="text" name="surname" class="form-control" size="40" placeholder="Inserisci il tuo cognome" required>
 
                     <label for="username" class="form-label"> Username: </label>
                     <input type="text" name="username" class="form-control" size="40" placeholder="Inserisci il tuo nome utente" required>

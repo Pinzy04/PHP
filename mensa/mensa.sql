@@ -39,8 +39,8 @@ INSERT INTO utenti (nome, username, psw, livello) VALUES
 ("Filippo", "filippo", PASSWORD("123"), 1),
 ("Gianni", "gianni", PASSWORD("123"), 1),
 ("Tonno", "tonnaccio", PASSWORD("123"), 1),
-("Chef Cannavacciuolo", "Chef", PASSWORD("123"), 2),
-("Chef Locatelli", "Chef", PASSWORD("123"), 2),
+("Chef Cannavacciuolo", "ChefC", PASSWORD("123"), 2),
+("Chef Locatelli", "ChefL", PASSWORD("123"), 2),
 ("Admin", "admin", PASSWORD("admin"), 3);
 
 INSERT INTO ingredienti (nome, quantita, misura) VALUES
